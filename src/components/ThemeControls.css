@@ -1,18 +1,8 @@
-.theme-controls {
+.swatches {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-}
-
-.swatches {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px 4px 6px;
-  background: var(--panel);
-  border: 3px solid var(--black);
-  box-shadow: 4px 4px 0 var(--panel-shadow);
+  gap: 8px;
 }
 
 .swatch {
@@ -31,22 +21,46 @@
     0 0 0 6px var(--fg);
 }
 
+/* The palette name sits on its own line above the swatches. */
 .swatches-name {
-  padding-left: 6px;
+  order: -1;
+  flex-basis: 100%;
   font-family: var(--font-label);
   font-size: 10px;
   text-transform: uppercase;
 }
 
+/* ---------- Palette picker (desktop bar) ---------- */
+
+.palette-picker {
+  position: relative;
+}
+
+.palette-popover {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  z-index: 1;
+  padding: 12px;
+  background: var(--panel);
+  border: 3px solid var(--black);
+  box-shadow: 4px 4px 0 var(--panel-shadow);
+}
+
+.palette-popover .swatches {
+  width: 252px;
+}
+
+/* ---------- Mode toggle ---------- */
+
 .mode-toggle {
-  min-height: 50px;
-  padding: 0 14px;
-  font-family: var(--font-label);
-  font-size: 11px;
-  text-transform: uppercase;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 20px;
   color: var(--fg-invert);
   background: var(--fg);
   border: 3px solid var(--black);
-  box-shadow: 4px 4px 0 var(--shadow-pop);
+  box-shadow: 3px 3px 0 var(--shadow-pop);
   cursor: pointer;
 }
