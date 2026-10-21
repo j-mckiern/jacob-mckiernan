@@ -1,0 +1,50 @@
+/* Base reset + font stacks. Colors arrive in session 2 (tokens.css). */
+:root {
+  --font-body: 'Archivo Narrow', system-ui, sans-serif;
+  --font-display: 'Bowlby One', Impact, sans-serif;
+  --font-label: 'Rubik Mono One', ui-monospace, monospace;
+  --font-type: 'Special Elite', 'Courier New', monospace;
+  --font-hand: 'Rock Salt', cursive;
+  --font-marker: 'Permanent Marker', cursive;
+  --font-graffiti: 'Sedgwick Ave Display', cursive;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
