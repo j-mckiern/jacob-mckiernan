@@ -1,4 +1,5 @@
 import Header from './components/Header'
+import Hero from './components/Hero'
 import { sections } from './data/sections'
 
 function App() {
@@ -12,10 +13,7 @@ function App() {
 
       {/* tabIndex lets the skip link move keyboard focus here, not just scroll. */}
       <main id="main" tabIndex={-1}>
-        <section id="top" className="placeholder" aria-labelledby="hero-title">
-          <h1 id="hero-title">Jacob McKiernan</h1>
-          <p>Scaffold is up. Sections land one session at a time.</p>
-        </section>
+        <Hero />
 
         {sections.map((section) => (
           <section

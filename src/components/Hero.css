@@ -1,0 +1,442 @@
+/*
+  Hero: a 12-column grid of four blocks.
+    ≥1280px:   name (7 cols) | stage (5 cols, 2 rows)
+               status (3)  find me (4)
+    900–1279:  name (7) | stage (5); status (5) | find me (7)
+    <900px:    one column — name, status, find me, stage.
+
+  Every block shares one border, one shadow size and one padding, so the gaps
+  between them read as equal and their edges line up with the header bar.
+*/
+.hero {
+  /* Tile colors. Normally the palette's 2nd and 3rd highlights; Slate remaps
+     them below so its name gets purple instead of two blacks. */
+  --tile-pop-1: var(--hl-2);
+  --tile-pop-1-fg: var(--hl-2-fg);
+  --tile-pop-2: var(--hl-3);
+  --tile-pop-2-fg: var(--hl-3-fg);
+  --stage: var(--b);
+
+  /* Shared block geometry. The visible gap is --gap minus the shadow. */
+  --border: 5px;
+  --shadow: 8px;
+  --pad: 36px;
+  --gap: 30px;
+
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 40px 96px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+[data-palette='slate'] .hero {
+  --tile-pop-1: var(--c);
+  --tile-pop-1-fg: var(--c-fg);
+  --tile-pop-2: var(--b);
+  --tile-pop-2-fg: var(--b-fg);
+}
+
+/* Slate's black stage would vanish on its black dark-mode page. */
+[data-palette='slate'][data-mode='dark'] .hero {
+  --stage: var(--c);
+}
+
+/* ---------- Shared block ---------- */
+
+/* Each block picks its shadow color with --block-shadow. */
+.hero-block {
+  position: relative;
+  border: var(--border) solid var(--black);
+  box-shadow: var(--shadow) var(--shadow) 0 var(--block-shadow, var(--panel-shadow));
+}
+
+/* ---------- Name panel ---------- */
+
+.hero-name {
+  --block-shadow: var(--shadow-pop);
+  grid-column: span 7;
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--a);
+}
+
+/* Halftone dots over the color. */
+.hero-name::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--black) 30%, transparent) 1.3px,
+    transparent 1.6px
+  );
+  background-size: 9px 9px;
+  opacity: 0.45;
+}
+
+.hero-name-inner {
+  position: relative;
+  height: 100%;
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  /* Lets the tiles size themselves from this box's width (cqi units). */
+  container-type: inline-size;
+}
+
+.hero-kicker {
+  margin: 0;
+  width: max-content;
+  max-width: 100%;
+  padding: 7px 12px;
+  font-family: var(--font-type);
+  font-size: 17px;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--black);
+}
+
+/* ---------- Ransom-note name ---------- */
+
+.hero-title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.22em;
+  font-weight: 400;
+  /* The first name's 5 tiles take about 6.4em plus their borders, so this
+     keeps them on one row at any panel width. */
+  font-size: clamp(32px, calc((100cqi - 40px) / 6.4), 100px);
+}
+
+.name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.name-first {
+  gap: 0.14em;
+}
+
+/* 9 tiles, sized the same way so "McKiernan" fits on one row too. */
+.name-last {
+  gap: 6px;
+  font-size: clamp(16px, calc((100cqi - 110px) / 10.5), 40px);
+}
+
+.tile {
+  font-family: var(--tile-font);
+  font-size: calc(var(--tile-size) * 1em);
+  line-height: 1;
+  padding: 0.1em 0.14em;
+  border: 4px solid var(--black);
+  box-shadow: 6px 6px 0 var(--black);
+  transform: rotate(var(--tile-rot));
+}
+
+.name-last .tile {
+  padding: 0.15em 0.25em;
+  border-width: 3px;
+  box-shadow: 4px 4px 0 var(--black);
+}
+
+.tone-ink {
+  color: var(--paper);
+  background: var(--black);
+}
+
+.tone-black {
+  color: var(--white);
+  background: var(--black);
+}
+
+.tone-white {
+  color: var(--black);
+  background: var(--white);
+}
+
+.tone-paper {
+  color: var(--black);
+  background: var(--paper);
+}
+
+.tone-pop-1 {
+  color: var(--tile-pop-1-fg);
+  background: var(--tile-pop-1);
+}
+
+.tone-pop-2 {
+  color: var(--tile-pop-2-fg);
+  background: var(--tile-pop-2);
+}
+
+.hero-one-liner {
+  margin: 0;
+  max-width: 540px;
+  padding: 12px 16px;
+  font-family: var(--font-type);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--black);
+  background: var(--paper);
+  border: 3px solid var(--black);
+}
+
+/* ---------- Mascot stage ---------- */
+
+.hero-stage {
+  /* --fg is black on a light page and paper on a dark one, so it always shows. */
+  --block-shadow: var(--fg);
+  grid-column: span 5;
+  grid-row: span 2;
+  min-height: 780px;
+  overflow: hidden;
+  background: var(--stage);
+}
+
+/* Diagonal stripes; oversized so the angle never leaves a bare corner. */
+.hero-stage::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background-image: repeating-linear-gradient(-28deg, var(--stripe) 0 12px, transparent 12px 34px);
+}
+
+/* ---------- Status card (Currently / Open to) ---------- */
+
+/* Stays white in both modes, so its labels use the on-white text tokens. */
+.hero-status {
+  grid-column: span 3;
+  margin: 0;
+  padding: var(--pad) 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  color: var(--black);
+  background: var(--white);
+}
+
+.status-item + .status-item {
+  padding-top: 16px;
+  border-top: 3px solid var(--black);
+}
+
+.status-label {
+  font-family: var(--font-label);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.status-label-a {
+  color: var(--text-a-on-white);
+}
+
+.status-label-b {
+  color: var(--text-b-on-white);
+}
+
+.status-value {
+  margin: 6px 0 0;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* ---------- Find me ---------- */
+
+.hero-find {
+  /* A colored shadow; black on a black card would just look like a thicker card. */
+  --block-shadow: var(--shadow-pop);
+  grid-column: span 4;
+  padding: var(--pad) 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  color: var(--paper);
+  background: var(--black);
+  /* Black in light mode; paper in dark mode, where a black edge would vanish. */
+  border-color: var(--fg);
+}
+
+.find-title {
+  margin: 0;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* Three equal buttons that fill the card edge to edge. */
+.find-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.find-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 52px;
+  padding: 0 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 3px solid var(--paper);
+}
+
+.find-link:hover {
+  text-decoration: underline;
+}
+
+/* Paper outline instead of the default dark one, which would vanish here. */
+.find-link:focus-visible {
+  outline-color: var(--paper);
+}
+
+.find-link-1 {
+  color: var(--hl-1-fg);
+  background: var(--hl-1);
+}
+
+.find-link-2 {
+  color: var(--hl-2-fg);
+  background: var(--hl-2);
+}
+
+.find-link-3 {
+  color: var(--black);
+  background: var(--paper);
+}
+
+/* ---------- Small laptop ---------- */
+
+/* 3 columns is too narrow for the status card here, so the stage sits beside
+   the name only and the two cards share the row underneath. */
+@media (max-width: 1279px) {
+  .hero-stage {
+    grid-row: auto;
+    min-height: 0;
+  }
+
+  .hero-status {
+    grid-column: span 5;
+  }
+
+  .hero-find {
+    grid-column: span 7;
+  }
+}
+
+/* ---------- Tablet + mobile ---------- */
+
+@media (max-width: 899px) {
+  .hero {
+    --border: 4px;
+    --shadow: 6px;
+    --pad: 22px;
+    --gap: 22px;
+
+    grid-template-columns: minmax(0, 1fr);
+    padding: 24px 16px 64px;
+  }
+
+  .hero-name,
+  .hero-stage,
+  .hero-status,
+  .hero-find {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 0;
+  }
+
+  .hero-name-inner {
+    gap: 20px;
+  }
+
+  .hero-kicker {
+    font-size: 13px;
+    padding: 5px 9px;
+  }
+
+  .tile {
+    border-width: 3px;
+    box-shadow: 4px 4px 0 var(--black);
+  }
+
+  .name-last {
+    gap: 3px;
+  }
+
+  .name-last .tile {
+    border-width: 2px;
+    box-shadow: 2px 2px 0 var(--black);
+  }
+
+  .hero-one-liner {
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+
+  /* The stage goes last on small screens, under the cards. */
+  .hero-stage {
+    order: 1;
+    min-height: 320px;
+  }
+
+  /* The status card splits into two side-by-side cards, each a block itself. */
+  .hero-status {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .status-item,
+  .status-item + .status-item {
+    padding: 16px;
+    background: var(--white);
+    border: var(--border) solid var(--black);
+    box-shadow: var(--shadow) var(--shadow) 0 var(--panel-shadow);
+  }
+
+  .status-label {
+    font-size: 9px;
+  }
+
+  .status-value {
+    margin-top: 4px;
+    font-size: 16px;
+  }
+
+  .hero-find {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .find-links {
+    gap: 8px;
+  }
+
+  .find-link {
+    min-height: 48px;
+    padding: 0 4px;
+    font-size: 10px;
+  }
+}
