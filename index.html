@@ -1,11 +1,32 @@
 <!doctype html>
-<html lang="en" data-palette="acid" data-mode="light">
+<html lang="en" data-palette="sour-patch" data-mode="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jacob McKiernan — Full-Stack Engineer</title>
     <meta name="description" content="Jacob McKiernan, full-stack engineer. Projects, toolkit and contact." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!--
+      Runs before the first paint so returning visitors never see the wrong theme flash in.
+      Keep the storage keys in sync with src/hooks/useTheme.ts.
+    -->
+    <script>
+      ;(function () {
+        var root = document.documentElement
+        var palette = null
+        var mode = null
+        try {
+          palette = localStorage.getItem('theme-palette')
+          mode = localStorage.getItem('theme-mode')
+        } catch (e) {}
+        if (palette) root.dataset.palette = palette
+        if (mode !== 'light' && mode !== 'dark') {
+          mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        root.dataset.mode = mode
+      })()
+    </script>
 
     <!-- Google Fonts: preconnect opens the connections early so the CSS + font files arrive sooner. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

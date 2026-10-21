@@ -1,0 +1,180 @@
+/*
+  Theme tokens. Two attributes on <html> drive everything:
+    data-palette = sour-patch | overdrive | pop-art | lily-pad | slate
+    data-mode    = light | dark
+
+  Layer 1 (palette blocks): raw colors per palette. Names starting with
+  `--_` are internal ingredients; components never use them directly.
+  Layer 2 (mode blocks): picks the light or dark ingredient and exposes
+  the public tokens (--bg, --panel, --fg, --text-a, ...).
+
+  This file is the only place hex colors are allowed.
+*/
+
+:root {
+  --black: #111111;
+  --white: #ffffff;
+}
+
+/* ---------- Layer 1: palettes ---------- */
+
+/* :root doubles as the fallback, so an unknown/stale palette id still gets colors. */
+:root,
+[data-palette='sour-patch'] {
+  --a: #b8e62e;
+  --a-fg: #111111;
+  --b: #f0477a;
+  --b-fg: #111111;
+  --c: #3fd0e0;
+  --c-fg: #111111;
+  --paper: #f7f5e6;
+  --_bg-light: #f1f7dc;
+  --_bg-dark: #10140a;
+  --_panel-dark: #1e2612;
+  --_text-a-light: #4d6b00;
+  --_text-a-dark: #d4ff5e;
+  --_text-b-light: #c0144d;
+  --_text-b-dark: #ff8aae;
+  --stripe: rgb(17 17 17 / 0.85);
+}
+
+[data-palette='overdrive'] {
+  --a: #dc2087; /* mockup #e0218a, darkened 2% so white text hits 4.5:1 */
+  --a-fg: #ffffff;
+  --b: #6a2bd9;
+  --b-fg: #ffffff;
+  --c: #5cc8ff;
+  --c-fg: #111111;
+  --paper: #f4eef7;
+  --_bg-light: #f2e8f6;
+  --_bg-dark: #12061f;
+  --_panel-dark: #24113a;
+  --_text-a-light: #b0126b;
+  --_text-a-dark: #ff6fbf;
+  --_text-b-light: #6a2bd9;
+  --_text-b-dark: #b999ff;
+}
+
+[data-palette='pop-art'] {
+  --a: #de342b; /* mockup #e0352b, darkened 1% so white text hits 4.5:1 */
+  --a-fg: #ffffff;
+  --b: #2340b8;
+  --b-fg: #ffffff;
+  --c: #f2b21b;
+  --c-fg: #111111;
+  --paper: #f4eedd;
+  --_bg-light: #efe8d6;
+  --_bg-dark: #0d1236;
+  --_panel-dark: #1a2160;
+  --_text-a-light: #b8241b;
+  --_text-a-dark: #ff7a70;
+  --_text-b-light: #2340b8;
+  --_text-b-dark: #9fb0ff;
+}
+
+[data-palette='lily-pad'] {
+  --a: #22b35e;
+  --a-fg: #111111;
+  --b: #2a44c9;
+  --b-fg: #ffffff;
+  --c: #f49ac8;
+  --c-fg: #111111;
+  --paper: #f3f2e8;
+  --_bg-light: #e7f3ec;
+  --_bg-dark: #07161a;
+  --_panel-dark: #12282c;
+  --_text-a-light: #167a3d;
+  --_text-a-dark: #6ee39a;
+  --_text-b-light: #2a44c9;
+  --_text-b-dark: #9faeff;
+}
+
+/* Slate: black, white and one purple accent. */
+[data-palette='slate'] {
+  --a: #ffffff;
+  --a-fg: #111111;
+  --b: #111111;
+  --b-fg: #ffffff;
+  --c: #7b3fe4;
+  --c-fg: #ffffff;
+  --paper: #f5f5f2;
+  --_bg-light: #e6e6e2;
+  --_bg-dark: #0b0b0b;
+  --_panel-dark: #1d1d1d;
+  --_text-a-light: #6a2bd9;
+  --_text-a-dark: #b999ff;
+  --_text-b-light: #111111;
+  --_text-b-dark: #f5f5f2;
+  --stripe: rgb(255 255 255 / 0.18);
+}
+
+/* ---------- Layer 2: modes ---------- */
+
+/* Highlights: the colors decorative blocks (headings, tiles, stickers, project
+   cards) rotate through. Normally just a / b / c. */
+:root {
+  --hl-1: var(--a);
+  --hl-1-fg: var(--a-fg);
+  --hl-2: var(--b);
+  --hl-2-fg: var(--b-fg);
+  --hl-3: var(--c);
+  --hl-3-fg: var(--c-fg);
+
+  /* Colored hard shadow behind dark controls (e.g. the mode toggle). */
+  --shadow-pop: var(--b);
+
+  /* Always the light-mode text color, for labels on cards that stay white. */
+  --text-a-on-white: var(--_text-a-light);
+  --text-b-on-white: var(--_text-b-light);
+}
+
+:root,
+[data-mode='light'] {
+  color-scheme: light;
+  --bg: var(--_bg-light);
+  --panel: var(--white);
+  --fg: var(--black);
+  --fg-invert: var(--paper);
+  --panel-shadow: var(--black);
+  --text-a: var(--_text-a-light);
+  --text-b: var(--_text-b-light);
+  --texture:
+    radial-gradient(rgb(0 0 0 / 0.08) 1px, transparent 1.3px),
+    radial-gradient(rgb(0 0 0 / 0.045) 1px, transparent 1.3px);
+  --texture-size: 4px 4px, 7px 7px;
+  --texture-pos: 0 0, 2px 3px;
+}
+
+[data-mode='dark'] {
+  color-scheme: dark;
+  --bg: var(--_bg-dark);
+  --panel: var(--_panel-dark);
+  --fg: var(--paper);
+  --fg-invert: var(--black);
+  /* A black shadow vanishes on a dark page, so panels get the colored one. */
+  --panel-shadow: var(--shadow-pop);
+  --text-a: var(--_text-a-dark);
+  --text-b: var(--_text-b-dark);
+  --texture: radial-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1.3px);
+  --texture-size: 5px 5px;
+  --texture-pos: 0 0;
+}
+
+/* Slate's a/b are white/black, so its highlights lead with purple, and the
+   black block flips to white in dark mode so it doesn't vanish. */
+[data-palette='slate'] {
+  --shadow-pop: var(--c);
+  --hl-1: var(--c);
+  --hl-1-fg: var(--c-fg);
+  --hl-2: var(--b);
+  --hl-2-fg: var(--b-fg);
+  --hl-3: var(--a);
+  --hl-3-fg: var(--a-fg);
+}
+
+[data-palette='slate'][data-mode='dark'] {
+  --hl-2: var(--a);
+  --hl-2-fg: var(--a-fg);
+  --hl-3: var(--c);
+  --hl-3-fg: var(--c-fg);
+}

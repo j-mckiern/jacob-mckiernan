@@ -33,7 +33,7 @@ vercel.json         Sends every route to index.html so /projects survives a refr
 
 ## Theming
 
-Two attributes on `<html>` control the colors: `data-palette` (`acid | overdrive | cobalt | lagoon | ink`) and `data-mode` (`light | dark`). Components only ever use CSS custom properties (tokens), never hex colors.
+Two attributes on `<html>` control the colors: `data-palette` (`sour-patch | overdrive | pop-art | lily-pad | slate`) and `data-mode` (`light | dark`). Components only ever use CSS custom properties (tokens), never hex colors.
 
 ## Deploy
 
