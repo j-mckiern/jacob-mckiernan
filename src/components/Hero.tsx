@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { hero } from '../data/hero'
 import { site } from '../data/site'
+import Mascot from './Mascot'
 import './Hero.css'
 
 type Font = 'marker' | 'type' | 'graffiti' | 'display' | 'label' | 'hand'
@@ -82,8 +83,9 @@ function Hero() {
         </div>
       </div>
 
-      {/* The mascot moves in here next session. */}
-      <div className="hero-block hero-stage" aria-hidden="true" />
+      <div className="hero-block hero-stage">
+        <Mascot />
+      </div>
 
       <dl className="hero-block hero-status">
         <div className="status-item">
