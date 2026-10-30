@@ -87,6 +87,12 @@ function Cursor() {
         hide()
         return
       }
+      // The page's scrollbar is outside the overlay, which would clip the
+      // diamond away, so the system cursor takes over there.
+      if (event.clientX >= html.clientWidth) {
+        hide()
+        return
+      }
       pointer.x = event.clientX
       pointer.y = event.clientY
       root.classList.add('is-live')

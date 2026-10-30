@@ -41,6 +41,37 @@ body {
   background-position: var(--texture-pos);
 }
 
+/* A square block on a track that blends into the page. */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  min-height: 64px;
+  background: var(--scrollbar-thumb);
+  border: 3px solid var(--black);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-thumb-active);
+}
+
+/* Firefox only: setting these in Chrome would turn off the rules above. */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-color: var(--scrollbar-thumb) var(--bg);
+  }
+}
+
 :focus-visible {
   outline: 3px dashed var(--fg);
   outline-offset: 3px;

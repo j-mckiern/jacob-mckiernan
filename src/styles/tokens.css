@@ -132,6 +132,11 @@
   /* How far the split text travels, as a multiple of its normal distance. */
   --glitch-reach: 1;
 
+  --scrollbar-thumb: var(--hl-1);
+  /* Not --hl-2: it's a dark color on a dark track in most palettes. */
+  --scrollbar-thumb-hover: var(--hl-3);
+  --scrollbar-thumb-active: var(--fg);
+
   /* The hard shadow behind a block filled with --hl-N, so a block never sits on a
      shadow of its own color. */
   --hl-1-shadow: var(--panel-shadow);
@@ -209,4 +214,7 @@
   --hl-2-fg: var(--a-fg);
   --hl-3: var(--c);
   --hl-3-fg: var(--c-fg);
+  /* Slate's purple is too dark to find on its dark track. */
+  --scrollbar-thumb: var(--_text-a-dark);
+  --scrollbar-thumb-hover: var(--hl-2);
 }
