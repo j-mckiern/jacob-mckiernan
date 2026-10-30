@@ -52,9 +52,9 @@
   }
 }
 
-/* Glitches into place as the heading reaches the screen. */
+/* Glitches into place every time the heading reaches the screen. */
 @media (prefers-reduced-motion: no-preference) {
-  .section-heading.is-in .section-label {
+  .section-heading.is-glitching .section-label {
     animation: label-glitch 520ms steps(1) backwards;
   }
 

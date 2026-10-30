@@ -15,7 +15,7 @@ function SectionHeading({ section, tone, level = 2 }: Props) {
   const Title = level === 1 ? 'h1' : 'h2'
 
   return (
-    <div className="section-heading reveal">
+    <div className="section-heading reveal" data-glitch>
       <span className="section-num" aria-hidden="true">
         {section.num}
       </span>
