@@ -1,20 +1,17 @@
 /*
-  Mascot: a round poke button with an SVG inside, a "!!" sticker that pops up
+  Mascot: a poke button with an SVG inside (a faceted character in an octagon), a "!!" sticker that pops up
   while it's hurt, and a caption. Sits centered in the hero's striped stage.
 */
 .mascot {
-  /* Ring widths around the disc: white, accent, black. */
-  --ring-1: 9px;
-  --ring-2: 15px;
-  --ring-3: 20px;
+  /* The SVG overhangs this box a little, so keep room for it in the stage. */
+  --frame-room: 20px;
 
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 34px;
-  /* Leaves room for the rings, which are shadows and take no layout space. */
-  width: min(340px, 100% - 2 * var(--ring-3));
+  width: min(340px, 100% - 2 * var(--frame-room));
 }
 
 .mascot-figure {
@@ -27,15 +24,10 @@
   width: 100%;
   padding: 0;
   border: 0;
-  border-radius: 50%;
   background: none;
   cursor: pointer;
   /* Skips the double-tap-to-zoom wait, but still lets a swipe scroll the page. */
   touch-action: manipulation;
-  box-shadow:
-    0 0 0 var(--ring-1) var(--white),
-    0 0 0 var(--ring-2) var(--c),
-    0 0 0 var(--ring-3) var(--black);
   transition: transform 150ms ease-out;
 }
 
@@ -45,30 +37,44 @@
   }
 }
 
-/* Outside the rings, in a color that reads on the stage. */
+/* Outside the frame, in a color that reads on the stage. */
 .mascot-poke:focus-visible {
   outline: 4px dashed var(--stage-fg);
-  outline-offset: calc(var(--ring-3) + 6px);
+  outline-offset: calc(var(--frame-room) + 6px);
 }
 
 .mascot-svg {
   display: block;
-  width: 100%;
+  /* 5% past the button on each side, to match the room the frame needs. */
+  width: 110%;
+  max-width: none;
   height: auto;
-  border-radius: 50%;
+  margin-inline: -5%;
 }
 
 /* ---------- Drawing ---------- */
 
-.m-disc {
+.m-fill {
   fill: var(--a);
+}
+
+.m-frame-black {
+  fill: var(--black);
+}
+
+.m-frame-accent {
+  fill: var(--c);
+}
+
+.m-frame-white {
+  fill: var(--white);
 }
 
 .m-body,
 .m-head {
   stroke: var(--black);
   stroke-width: 7;
-  stroke-linejoin: round;
+  stroke-linejoin: miter;
 }
 
 .m-body {
@@ -83,7 +89,8 @@
   fill: none;
   stroke: var(--white);
   stroke-width: 5;
-  stroke-linecap: round;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
 }
 
 .m-shine-head {
@@ -99,7 +106,7 @@
   fill: none;
   stroke: var(--black);
   stroke-width: 6;
-  stroke-linecap: round;
+  stroke-linecap: butt;
 }
 
 .m-eye-x {
@@ -149,6 +156,9 @@
   color: var(--paper);
   background: var(--black);
   transform: rotate(-2deg);
+  /* Cut ends, matching the hero's kicker. */
+  padding-inline: 20px;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
 }
 
 /* Touch screens can't hover, so they get "tap me". */
@@ -170,12 +180,10 @@
 
 @media (max-width: 899px) {
   .mascot {
-    --ring-1: 7px;
-    --ring-2: 12px;
-    --ring-3: 16px;
+    --frame-room: 16px;
 
     gap: 28px;
-    width: min(230px, 100% - 2 * var(--ring-3));
+    width: min(230px, 100% - 2 * var(--frame-room));
   }
 
   .mascot-pop {
@@ -186,6 +194,19 @@
 
   .mascot-caption {
     font-size: 11px;
+  }
+}
+
+/* The mascot breathes. */
+@media (prefers-reduced-motion: no-preference) {
+  .mascot-figure {
+    animation: mascot-float 3.6s ease-in-out infinite;
+  }
+
+  @keyframes mascot-float {
+    50% {
+      transform: translateY(-9px) rotate(-1deg);
+    }
   }
 }
 

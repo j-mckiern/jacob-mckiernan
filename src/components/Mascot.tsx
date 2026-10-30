@@ -27,6 +27,24 @@ const SHAKE: Keyframe[] = [
 const cross = (cx: number) =>
   `M${cx - 6} ${EYE_Y - 6} L${cx + 6} ${EYE_Y + 6} M${cx + 6} ${EYE_Y - 6} L${cx - 6} ${EYE_Y + 6}`
 
+/** The corners of a regular octagon with a flat top edge, as "x y" pairs. */
+const octagon = (radius: number, cy: number) =>
+  Array.from({ length: 8 }, (_, i) => {
+    const angle = ((-67.5 + i * 45) * Math.PI) / 180
+    return `${(100 + radius * Math.cos(angle)).toFixed(1)} ${(cy + radius * Math.sin(angle)).toFixed(1)}`
+  })
+
+// The radius keeps the head's sides clear of the eyes' full reach.
+const HEAD = `M${octagon(36.8, 78).join(' L')} Z`
+const HEAD_SHINE = 'M76 62 L87 51 L104 51'
+const BODY = 'M30 204 L40 156 L72 130 L128 130 L160 156 L170 204 Z'
+const BODY_SHINE = 'M58 170 L68 152 L92 140'
+
+// Reaches the edge of the viewBox at its flat sides. Each layer of the frame is
+// a fraction of this, and the character is clipped to the innermost one.
+const FRAME_RADIUS = 108.2
+const frameLayer = (scale: number) => octagon(FRAME_RADIUS * scale, 100).join(' ')
+
 function Mascot() {
   const [hurt, setHurt] = useState(false)
   const shakerRef = useRef<HTMLDivElement>(null)
@@ -97,11 +115,19 @@ function Mascot() {
         <div ref={shakerRef}>
           <button type="button" className="mascot-poke" onClick={poke} aria-label={hero.mascot.label}>
             <svg ref={svgRef} className="mascot-svg" viewBox="0 0 200 200" aria-hidden="true">
-              <circle className="m-disc" cx="100" cy="100" r="100" />
-              <path className="m-body" d="M30 204 C34 150 62 124 100 124 C138 124 166 150 170 204 Z" />
-              <path className="m-shine" d="M58 170 C70 150 86 142 100 141" opacity=".55" />
-              <circle className="m-head" cx="100" cy="78" r="34" />
-              <path className="m-shine m-shine-head" d="M81 60 C87 52 96 49 104 50" />
+              <clipPath id="mascot-frame-clip">
+                <polygon points={frameLayer(0.81)} />
+              </clipPath>
+              <polygon className="m-frame-black" points={frameLayer(1)} />
+              <polygon className="m-frame-accent" points={frameLayer(0.93)} />
+              <polygon className="m-frame-white" points={frameLayer(0.87)} />
+              <polygon className="m-fill" points={frameLayer(0.81)} />
+              <g clipPath="url(#mascot-frame-clip)">
+                <path className="m-body" d={BODY} />
+                <path className="m-shine" d={BODY_SHINE} opacity=".55" />
+              </g>
+              <path className="m-head" d={HEAD} />
+              <path className="m-shine m-shine-head" d={HEAD_SHINE} />
               <g ref={eyesRef} className="m-eyes">
                 {hurt ? (
                   <path className="m-eye m-eye-x" d={`${cross(EYE_L)} ${cross(EYE_R)}`} />
