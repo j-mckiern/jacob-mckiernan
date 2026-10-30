@@ -1,0 +1,125 @@
+/* The section becomes its own stacking layer, so z-index -1 lands above the
+   page background but below the section's content. */
+.has-shards {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Full-bleed: wider than the 1280px sections, centered on them. The extra 60px
+   each side hides the edges as shards drift; main's overflow-x clips it. */
+.shards {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw - 60px);
+  width: calc(100vw + 120px);
+  pointer-events: none;
+}
+
+/* --pointer-x/y and --shard-scroll come from useDepth. */
+.shard {
+  position: absolute;
+  left: 0;
+  right: 0;
+  transform: translate3d(
+    calc(var(--pointer-x, 0) * var(--shard-depth) * -1px),
+    calc(
+      var(--pointer-y, 0) * var(--shard-depth) * -0.7px +
+        var(--shard-scroll, 0) * var(--shard-rate) * -1px
+    ),
+    0
+  );
+}
+
+/* Fills its box and carries the color and the clip-path. */
+.shard-fill {
+  position: absolute;
+  inset: 0;
+}
+
+/* Halftone dots, so shards feel printed like the panels above them. */
+.shard-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--black) 30%, transparent) 1.3px,
+    transparent 1.6px
+  );
+  background-size: 9px 9px;
+  opacity: 0.4;
+}
+
+.shard-hl-1 {
+  background: var(--hl-1);
+}
+
+.shard-hl-2 {
+  background: var(--hl-2);
+}
+
+.shard-hl-3 {
+  background: var(--hl-3);
+}
+
+.shard-ink {
+  background: var(--black);
+}
+
+[data-mode='dark'] .shard-ink {
+  background: var(--panel);
+}
+
+/* ---------- Outline + hard shadow ---------- */
+
+/* Four copies make the outline, like the panels' borders. The last is the hard
+   shadow, which leans inward so it stays on screen. */
+.shard-outlined {
+  --shard-edge: var(--black);
+  --shard-shadow: var(--black);
+  --shard-lean: -7px;
+
+  filter: drop-shadow(3px 0 0 var(--shard-edge)) drop-shadow(-3px 0 0 var(--shard-edge))
+    drop-shadow(0 3px 0 var(--shard-edge)) drop-shadow(0 -3px 0 var(--shard-edge))
+    drop-shadow(var(--shard-lean) 7px 0 var(--shard-shadow));
+}
+
+/* Black would vanish on a dark page. Each shard's shadow takes a neighbor's
+   color, so it always contrasts with the shard itself. */
+[data-mode='dark'] .shard-outlined {
+  --shard-edge: var(--paper);
+}
+
+[data-mode='dark'] .shard-outlined-hl-1 {
+  --shard-shadow: var(--hl-2);
+}
+
+[data-mode='dark'] .shard-outlined-hl-2,
+[data-mode='dark'] .shard-outlined-hl-3 {
+  --shard-shadow: var(--hl-1);
+}
+
+/* ---------- Rails ---------- */
+
+/* As wide as the screen's side margin, stopping short of the timeline's dates.
+   The 60px is the part of .shards hidden past the screen edge. */
+.shard-rail {
+  width: calc(60px + max(34px, (100vw - 1280px) / 2 + 30px));
+}
+
+.shard-rail-left {
+  --shard-lean: 7px;
+
+  right: auto;
+}
+
+.shard-rail-right {
+  left: auto;
+}
+
+@media (max-width: 1099px) {
+  .shard-rail {
+    display: none;
+  }
+}

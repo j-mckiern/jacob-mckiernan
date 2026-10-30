@@ -50,6 +50,12 @@ main:focus {
   outline: none;
 }
 
+/* Shards run wider than the screen. clip, not hidden, so it can't become a
+   scroll container and break the sticky header or anchor jumps. */
+main {
+  overflow-x: clip;
+}
+
 /* Anchor jumps stop below the sticky header instead of underneath it. */
 main,
 section[id] {

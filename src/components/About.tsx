@@ -3,6 +3,7 @@ import { about } from '../data/about'
 import { sections } from '../data/sections'
 import { useScrollFill } from '../hooks/useScrollFill'
 import SectionHeading from './SectionHeading'
+import Shards from './Shards'
 import './About.css'
 
 const section = sections.find((s) => s.id === 'about')!
@@ -18,10 +19,11 @@ function About() {
   useScrollFill(root, list)
 
   return (
-    <section id={section.id} className="about" aria-labelledby={`${section.id}-title`}>
+    <section id={section.id} className="about has-shards" aria-labelledby={`${section.id}-title`}>
+      <Shards section="about" />
       <SectionHeading section={section} tone={2} />
 
-      <div className="about-caption">
+      <div className="about-caption reveal" data-tilt>
         <p className="about-lead">{about.lead}</p>
       </div>
 

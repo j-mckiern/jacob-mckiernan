@@ -52,7 +52,7 @@ function Header() {
             <a
               key={section.id}
               href={`#${section.id}`}
-              className="nav-link"
+              className="nav-link pop"
               aria-current={active === section.id ? 'location' : undefined}
             >
               <span aria-hidden="true">{section.num}</span> {section.label}
@@ -65,7 +65,7 @@ function Header() {
             <PalettePicker palette={palette} onPick={setPalette} />
           </div>
           <ModeToggle mode={mode} onToggle={toggleMode} />
-          <ResumeLink className="resume-link desktop-only" />
+          <ResumeLink className="resume-link desktop-only pop" />
           <button
             ref={menuButton}
             type="button"

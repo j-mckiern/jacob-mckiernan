@@ -1,0 +1,97 @@
+html[data-cursor='custom'],
+html[data-cursor='custom'] * {
+  cursor: none !important;
+}
+
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cursor.is-live {
+  opacity: 1;
+}
+
+.cursor-dot,
+.cursor-frame,
+.cursor-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+/* White, black and accent together stay visible on any background. */
+.cursor-dot b {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 12px;
+  height: 12px;
+  background: var(--white);
+  border: 2px solid var(--black);
+  box-shadow: 0 0 0 2px var(--c);
+  transform: rotate(45deg);
+}
+
+.cursor-frame i {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 3px solid var(--c);
+  filter: drop-shadow(1px 1px 0 var(--black));
+}
+
+.cursor-frame i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.cursor-frame i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-bottom: 0;
+  border-left: 0;
+}
+
+.cursor-frame i:nth-child(3) {
+  right: 0;
+  bottom: 0;
+  border-top: 0;
+  border-left: 0;
+}
+
+.cursor-frame i:nth-child(4) {
+  bottom: 0;
+  left: 0;
+  border-top: 0;
+  border-right: 0;
+}
+
+.cursor.is-hover .cursor-frame i {
+  border-color: var(--a);
+}
+
+.cursor-tag {
+  padding: 3px 9px 4px 7px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--paper);
+  background: var(--black);
+  box-shadow: 3px 3px 0 var(--c);
+  clip-path: inset(0 100% 100% 0);
+  transition: clip-path 160ms steps(4);
+}
+
+/* -8px leaves room for the shadow once the tag has wiped open. */
+.cursor-tag.is-on {
+  clip-path: inset(-8px);
+}

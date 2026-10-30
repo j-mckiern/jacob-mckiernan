@@ -31,6 +31,12 @@
 
 .logo {
   flex: none;
+  /* A 44px tap target without making the bar any taller. */
+  display: inline-flex;
+  align-items: center;
+  /* Flex drops the plain space before the star, so space it here. */
+  gap: 0.35em;
+  min-height: 44px;
   font-family: var(--font-hand);
   font-size: 20px;
   line-height: 1.2;

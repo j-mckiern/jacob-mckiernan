@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import { hero } from '../data/hero'
 import { site } from '../data/site'
 import Mascot from './Mascot'
+import Shards from './Shards'
 import './Hero.css'
 
 type Font = 'marker' | 'type' | 'graffiti' | 'display' | 'label' | 'hand'
@@ -56,13 +57,18 @@ function ExternalLink({ href, label, className }: { href: string; label: string;
   )
 }
 
+/** Staggers the blocks' entrance, in reading order. */
+const revealOrder = (i: number) => ({ '--reveal-i': i }) as CSSProperties
+
 function Hero() {
   const [first, ...rest] = site.name.split(' ')
   const last = rest.join(' ')
 
   return (
-    <section id="top" className="hero" aria-labelledby="hero-title">
-      <div className="hero-block hero-name">
+    <section id="top" className="hero has-shards" aria-labelledby="hero-title">
+      <Shards section="hero" />
+
+      <div className="hero-block hero-name reveal" data-tilt style={revealOrder(0)}>
         <div className="hero-name-inner">
           <p className="hero-kicker">
             {site.title} — {site.location}
@@ -83,11 +89,11 @@ function Hero() {
         </div>
       </div>
 
-      <div className="hero-block hero-stage">
+      <div className="hero-block hero-stage reveal" data-tilt style={revealOrder(1)}>
         <Mascot />
       </div>
 
-      <dl className="hero-block hero-status">
+      <dl className="hero-block hero-status reveal" data-tilt style={revealOrder(2)}>
         <div className="status-item">
           <dt className="status-label status-label-a">Currently</dt>
           <dd className="status-value">{hero.currently}</dd>
@@ -100,17 +106,17 @@ function Hero() {
         </div>
       </dl>
 
-      <div className="hero-block hero-find">
+      <div className="hero-block hero-find reveal" data-tilt style={revealOrder(3)}>
         <h2 className="find-title">Find me</h2>
         <ul className="find-links">
           <li>
-            <ExternalLink className="find-link find-link-1" href={site.github} label="GitHub" />
+            <ExternalLink className="find-link find-link-1 pop" href={site.github} label="GitHub" />
           </li>
           <li>
-            <ExternalLink className="find-link find-link-2" href={site.linkedin} label="LinkedIn" />
+            <ExternalLink className="find-link find-link-2 pop" href={site.linkedin} label="LinkedIn" />
           </li>
           <li>
-            <a className="find-link find-link-3" href={`mailto:${site.email}`}>
+            <a className="find-link find-link-3 pop" href={`mailto:${site.email}`}>
               Email <span aria-hidden="true">↗</span>
             </a>
           </li>

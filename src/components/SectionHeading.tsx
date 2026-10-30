@@ -11,7 +11,7 @@ type Props = {
     section's aria-labelledby points at. */
 function SectionHeading({ section, tone }: Props) {
   return (
-    <div className="section-heading">
+    <div className="section-heading reveal">
       <span className="section-num" aria-hidden="true">
         {section.num}
       </span>
