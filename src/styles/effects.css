@@ -30,13 +30,13 @@
 /* The text's colors split apart for a moment. */
 @keyframes split {
   0% {
-    text-shadow: 3px 0 var(--c), -3px 0 var(--b);
+    text-shadow: 3px 0 var(--glitch-1), -3px 0 var(--glitch-2);
   }
   33% {
-    text-shadow: -2px 0 var(--c), 2px 0 var(--b);
+    text-shadow: -2px 0 var(--glitch-1), 2px 0 var(--glitch-2);
   }
   66% {
-    text-shadow: 1px 0 var(--c), -1px 0 var(--b);
+    text-shadow: 1px 0 var(--glitch-1), -1px 0 var(--glitch-2);
   }
 }
 
@@ -54,8 +54,8 @@
     z-index: 1;
     transform: translate(-2px, -3px) skewX(-7deg) scale(1.05);
     box-shadow:
-      5px 5px 0 var(--c),
-      -3px -3px 0 var(--b);
+      5px 5px 0 var(--glitch-1),
+      -3px -3px 0 var(--glitch-2);
   }
 }
 

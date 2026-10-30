@@ -123,6 +123,11 @@
   /* Colored hard shadow behind dark controls (e.g. the mode toggle). */
   --shadow-pop: var(--b);
 
+  /* The two colors the hover glitch splits text and shadows into. They sit beside
+     dark text, so they have to be bright. */
+  --glitch-1: var(--c);
+  --glitch-2: var(--b);
+
   /* Always the light-mode text color, for labels on cards that stay white. */
   --text-a-on-white: var(--_text-a-light);
   --text-b-on-white: var(--_text-b-light);
@@ -160,6 +165,11 @@
   --texture-pos: 0 0;
 }
 
+/* --b is dark here, which would smear against black text. */
+[data-palette='lily-pad'] {
+  --glitch-2: var(--a);
+}
+
 /* Slate's a/b are white/black, so its highlights lead with purple, and the
    black block flips to white in dark mode so it doesn't vanish. */
 [data-palette='slate'] {
@@ -170,6 +180,8 @@
   --hl-2-fg: var(--b-fg);
   --hl-3: var(--a);
   --hl-3-fg: var(--a-fg);
+  /* Two purples, since black smears and white vanishes on Slate's white blocks. */
+  --glitch-2: var(--_text-a-dark);
 }
 
 [data-palette='slate'][data-mode='dark'] {

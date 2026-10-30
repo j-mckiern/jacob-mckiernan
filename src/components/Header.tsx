@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
-import { sections } from '../data/sections'
+import { useEffect, useRef, useState, type ComponentProps } from 'react'
+import { Link, useLocation } from 'react-router'
+import { sections, type Section } from '../data/sections'
 import { site } from '../data/site'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { useTheme } from '../hooks/useTheme'
@@ -20,10 +21,30 @@ function ResumeLink({ className }: { className: string }) {
   )
 }
 
+type SectionLinkProps = ComponentProps<'a'> & Pick<Section, 'id'> & { onHome: boolean }
+
+/** On the homepage a plain #hash, so the browser scrolls and moves focus itself.
+    On any other page, a router link back to the homepage's section. */
+function SectionLink({ id, onHome, children, ...props }: SectionLinkProps) {
+  return onHome ? (
+    <a href={`#${id}`} {...props}>
+      {children}
+    </a>
+  ) : (
+    <Link to={`/#${id}`} {...props}>
+      {children}
+    </Link>
+  )
+}
+
 function Header() {
   // The one place theme state lives; every control below reads from it.
   const { palette, setPalette, mode, toggleMode } = useTheme()
-  const active = useActiveSection(observedIds)
+  const { pathname } = useLocation()
+  const onHome = pathname === '/'
+  const spied = useActiveSection(observedIds, pathname)
+  // The scroll-spy only applies to the homepage. /projects always lights Projects.
+  const active = onHome ? spied : 'projects'
   const [menuOpen, setMenuOpen] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
 
@@ -43,20 +64,26 @@ function Header() {
   return (
     <header className="site-header">
       <div className="header-bar">
-        <a className="logo" href="#top" aria-label={`${site.name}, back to top`}>
+        <SectionLink
+          id="top"
+          onHome={onHome}
+          className="logo"
+          aria-label={onHome ? `${site.name}, back to top` : `${site.name}, home`}
+        >
           {site.handle} <span className="logo-star" aria-hidden="true">✦</span>
-        </a>
+        </SectionLink>
 
         <nav className="nav-desktop" aria-label="Primary">
           {sections.map((section) => (
-            <a
+            <SectionLink
               key={section.id}
-              href={`#${section.id}`}
+              id={section.id}
+              onHome={onHome}
               className="nav-link pop"
               aria-current={active === section.id ? 'location' : undefined}
             >
               <span aria-hidden="true">{section.num}</span> {section.label}
-            </a>
+            </SectionLink>
           ))}
         </nav>
 
@@ -84,9 +111,10 @@ function Header() {
         <div id="mobile-menu" className="mobile-menu mobile-only">
           <nav className="mobile-nav" aria-label="Primary">
             {sections.map((section) => (
-              <a
+              <SectionLink
                 key={section.id}
-                href={`#${section.id}`}
+                id={section.id}
+                onHome={onHome}
                 className="mobile-nav-link"
                 aria-current={active === section.id ? 'location' : undefined}
                 onClick={() => setMenuOpen(false)}
@@ -95,7 +123,7 @@ function Header() {
                 <span className="mobile-nav-num" aria-hidden="true">
                   {section.num}
                 </span>
-              </a>
+              </SectionLink>
             ))}
           </nav>
           <PaletteSwatches palette={palette} onPick={setPalette} />

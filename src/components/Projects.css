@@ -1,0 +1,63 @@
+/* Shared by the homepage section and the /projects page. */
+.projects {
+  max-width: 1280px;
+  /* The margin pushes About's timeline fully above the nav jump's landing spot. */
+  margin: 32px auto 0;
+  /* No top padding: the nav jump should land right on the heading. */
+  padding: 0 40px 96px;
+  /* At least a full screen after a nav jump, so the next section stays below
+     the fold instead of peeking in. */
+  min-height: calc(100vh - var(--nav-offset));
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.projects-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.projects-all,
+.projects-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 48px;
+  padding: 0 20px;
+  font-family: var(--font-label);
+  font-size: 13px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--fg-invert);
+  background: var(--fg);
+  box-shadow: 6px 6px 0 var(--shadow-pop);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px 40px;
+}
+
+/* ---------- Tablet + mobile ---------- */
+
+@media (max-width: 899px) {
+  .projects {
+    padding: 0 16px 64px;
+    gap: 32px;
+  }
+
+  .projects-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+
+  .projects-all,
+  .projects-back {
+    font-size: 12px;
+  }
+}

@@ -27,9 +27,12 @@ function Shards({ section }: { section: ShardSection }) {
               .join(' ')}
             style={style}
           >
-            {/* The clip lives on this inner div so the outline's drop-shadow, on the
-                parent, can follow the cut shape instead of being clipped by it. */}
-            <div className={`shard-fill shard-${shard.tone}`} style={{ clipPath: shard.points }} />
+            {/* The clip lives on the innermost div so the outline's drop-shadow can follow
+                the cut shape instead of being clipped by it. The filter sits one level
+                inside the moving .shard, so it's drawn once and the result just slides. */}
+            <div className="shard-art">
+              <div className={`shard-fill shard-${shard.tone}`} style={{ clipPath: shard.points }} />
+            </div>
           </div>
         )
       })}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-palette="sour-patch" data-mode="light">
+<html lang="en" data-palette="sour-patch" data-mode="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,10 +21,7 @@
           mode = localStorage.getItem('theme-mode')
         } catch (e) {}
         if (palette) root.dataset.palette = palette
-        if (mode !== 'light' && mode !== 'dark') {
-          mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        }
-        root.dataset.mode = mode
+        if (mode === 'light' || mode === 'dark') root.dataset.mode = mode
       })()
     </script>
 

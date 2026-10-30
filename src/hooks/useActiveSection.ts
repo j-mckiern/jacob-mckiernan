@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react'
 /**
  * Returns the id of the section currently in the middle of the screen, or null.
  * Include the hero's id in `ids` so scrolling back to the top clears the highlight.
+ * `route` re-finds the elements after a page change, since the old ones are gone.
  */
-export function useActiveSection(ids: readonly string[]) {
+export function useActiveSection(ids: readonly string[], route: string) {
   const [active, setActive] = useState<string | null>(null)
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export function useActiveSection(ids: readonly string[]) {
 
     elements.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
-  }, [ids])
+  }, [ids, route])
 
   return active
 }

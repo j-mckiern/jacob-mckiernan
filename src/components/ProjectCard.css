@@ -1,0 +1,271 @@
+/*
+  A flyer taped to the page. The card stays white in both modes, so its text uses
+  the fixed --black, never --fg. The top is a screenshot slot; the bottom is copy.
+*/
+.project-card {
+  --card-shadow: 8px;
+  --tone: var(--hl-1);
+  --tone-fg: var(--hl-1-fg);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--black);
+  background: var(--white);
+  border: 5px solid var(--black);
+  /* Slides against the pointer, as if lit from where the pointer is. */
+  box-shadow:
+    calc(var(--card-shadow) + var(--pointer-x, 0) * -5px) calc(var(--card-shadow) + var(--pointer-y, 0) * -5px) 0
+    var(--panel-shadow);
+}
+
+.project-tone-2 {
+  --tone: var(--hl-2);
+  --tone-fg: var(--hl-2-fg);
+}
+
+.project-tone-3 {
+  --tone: var(--hl-3);
+  --tone-fg: var(--hl-3-fg);
+}
+
+.project-tape {
+  position: absolute;
+  z-index: 2;
+  top: -19px;
+  left: 34px;
+  width: 124px;
+  height: 34px;
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--black) 35%, transparent);
+  transform: rotate(-5deg);
+}
+
+.project-card:nth-child(even) .project-tape {
+  left: auto;
+  right: 34px;
+  transform: rotate(4deg);
+}
+
+/* ---------- Screenshot slot ---------- */
+
+.project-media {
+  position: relative;
+  /* Follows the screen's height, so both cards still fit after a nav jump. */
+  height: clamp(150px, calc(100vh - 590px), 330px);
+  /* The frame of color around the image. It thins out on short screens, where the
+     image needs every pixel. */
+  --inset: clamp(12px, calc((100vh - 720px) / 5), 32px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tone);
+  border-bottom: 5px solid var(--black);
+}
+
+/* Halftone dots over the color. */
+.project-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--black) 30%, transparent) 1.3px,
+    transparent 1.6px
+  );
+  background-size: 9px 9px;
+  opacity: 0.45;
+}
+
+.project-image {
+  position: absolute;
+  inset: var(--inset);
+  width: calc(100% - var(--inset) * 2);
+  height: calc(100% - var(--inset) * 2);
+  object-fit: cover;
+  border: 4px solid var(--black);
+}
+
+.project-placeholder {
+  position: relative;
+  padding: 8px 12px;
+  font-family: var(--font-type);
+  font-size: 15px;
+  color: var(--black);
+  background: var(--white);
+  border: 3px solid var(--black);
+}
+
+/* Straddles the seam between the slot and the copy. */
+.project-status {
+  position: absolute;
+  right: 18px;
+  bottom: -20px;
+  z-index: 1;
+  margin: 0;
+  padding: 8px 12px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--black);
+  /* A die-cut edge, so it still reads as a sticker on a black screenshot slot. */
+  border: 2px solid var(--white);
+  transform: rotate(-2deg);
+}
+
+/* ---------- Copy ---------- */
+
+.project-body {
+  flex: 1;
+  padding: 22px 26px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(25px, 2.5vw, 32px);
+  font-weight: 400;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.project-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: var(--font-type);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* The dash hangs in the margin, so wrapped lines align with the text. */
+.project-points li {
+  padding-left: 1.5em;
+  text-indent: -1.5em;
+}
+
+.project-points li::before {
+  content: '— ';
+}
+
+/* Pinned to the bottom, so both cards' footers line up. */
+.project-foot {
+  margin-top: auto;
+  padding-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 2px dashed var(--black);
+}
+
+.project-stack {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.project-stack li:not(:last-child)::after {
+  content: '/';
+  margin-inline: 0.4em;
+  color: var(--text-b-on-white);
+}
+
+.project-links {
+  flex: none;
+  display: flex;
+  gap: 10px;
+}
+
+.project-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  min-width: 84px;
+  min-height: 46px;
+  padding: 0 12px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 3px solid var(--black);
+}
+
+/* The default outline uses --fg, which is paper in dark mode: invisible here. */
+.project-link:focus-visible {
+  outline-color: var(--black);
+}
+
+.project-link-live {
+  color: var(--tone-fg);
+  background: var(--tone);
+}
+
+.project-link-code {
+  color: var(--paper);
+  background: var(--black);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .project-card:hover .project-name {
+    animation: split 300ms steps(1);
+  }
+}
+
+/* ---------- Tablet + mobile ---------- */
+
+/* The stack and the buttons stop sharing a row when the card gets narrow. */
+@media (max-width: 1099px) {
+  .project-foot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .project-link {
+    flex: 1;
+  }
+}
+
+@media (max-width: 899px) {
+  .project-card {
+    --card-shadow: 6px;
+
+    border-width: 4px;
+  }
+
+  .project-media {
+    --inset: 16px;
+
+    height: 200px;
+    border-bottom-width: 4px;
+  }
+
+  .project-body {
+    padding: 28px 18px 20px;
+  }
+
+  .project-tape {
+    left: 20px;
+    width: 96px;
+    height: 28px;
+  }
+
+  .project-card:nth-child(even) .project-tape {
+    right: 20px;
+  }
+}

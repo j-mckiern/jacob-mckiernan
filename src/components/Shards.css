@@ -30,6 +30,14 @@
     ),
     0
   );
+  /* Its own GPU layer, so drifting moves the finished picture instead of redrawing
+     it. Without this, the outline filter reruns on every pointer move. */
+  will-change: transform;
+}
+
+.shard-art {
+  position: absolute;
+  inset: 0;
 }
 
 /* Fills its box and carries the color and the clip-path. */
@@ -79,7 +87,9 @@
   --shard-edge: var(--black);
   --shard-shadow: var(--black);
   --shard-lean: -7px;
+}
 
+.shard-outlined .shard-art {
   filter: drop-shadow(3px 0 0 var(--shard-edge)) drop-shadow(-3px 0 0 var(--shard-edge))
     drop-shadow(0 3px 0 var(--shard-edge)) drop-shadow(0 -3px 0 var(--shard-edge))
     drop-shadow(var(--shard-lean) 7px 0 var(--shard-shadow));
@@ -120,6 +130,14 @@
 
 @media (max-width: 1099px) {
   .shard-rail {
+    display: none;
+  }
+}
+
+/* One column leaves only a 16px margin, so shards would show as stray slivers
+   poking out from behind the blocks. */
+@media (max-width: 899px) {
+  .shards {
     display: none;
   }
 }
