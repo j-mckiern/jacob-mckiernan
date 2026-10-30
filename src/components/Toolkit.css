@@ -1,0 +1,148 @@
+.toolkit {
+  max-width: 1280px;
+  /* The margin pushes Projects fully above the nav jump's landing spot. */
+  margin: 32px auto 0;
+  /* The height of both ribbon shards. */
+  --ribbon-h: clamp(96px, 11vw, 150px);
+  /* No top padding: the nav jump should land right on the heading. The bottom holds
+     the lower ribbon, whose end has to stop above the nav offset. */
+  padding: 0 40px calc(var(--ribbon-h) + 120px);
+  /* At least a full screen after a nav jump, so the next section stays below
+     the fold instead of peeking in. */
+  min-height: calc(100vh - var(--nav-offset));
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.toolkit-stage {
+  position: relative;
+}
+
+/*
+  One sheet, ruled into rows. The color stays in the label blocks and every chip
+  is the same white, so a long list of tools doesn't turn into confetti.
+*/
+.toolkit-slab {
+  --slab-shadow: 8px;
+  /* Follows the screen's height, so the slab fits on a short screen and fills
+     out a tall one instead of leaving a gap under it. */
+  --row-pad: clamp(14px, calc((100vh - 600px) / 10), 32px);
+
+  margin: 0;
+  background: var(--panel);
+  border: 5px solid var(--black);
+  /* Slides against the pointer, as if lit from where the pointer is. */
+  box-shadow:
+    calc(var(--slab-shadow) + var(--pointer-x, 0) * -5px) calc(var(--slab-shadow) + var(--pointer-y, 0) * -5px) 0
+    var(--panel-shadow);
+}
+
+.toolkit-row {
+  display: grid;
+  grid-template-columns: 215px minmax(0, 1fr);
+}
+
+.toolkit-row + .toolkit-row {
+  border-top: 5px solid var(--black);
+}
+
+.toolkit-label {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  border-right: 5px solid var(--black);
+  /* Halftone dots over the color, like the project cards. */
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--black) 14%, transparent) 1.3px,
+    transparent 1.6px
+  );
+  background-size: 9px 9px;
+}
+
+.toolkit-tone-1 {
+  color: var(--hl-1-fg);
+  background-color: var(--hl-1);
+}
+
+.toolkit-tone-2 {
+  color: var(--hl-2-fg);
+  background-color: var(--hl-2);
+}
+
+.toolkit-tone-3 {
+  color: var(--hl-3-fg);
+  background-color: var(--hl-3);
+}
+
+.toolkit-tools {
+  margin: 0;
+  padding: var(--row-pad) 22px;
+}
+
+.toolkit-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* White in both modes, so its text uses the fixed --black, never --fg. */
+.toolkit-chip {
+  padding: 8px 10px;
+  font-family: var(--font-label);
+  font-size: 13px;
+  line-height: 1.2;
+  color: var(--black);
+  background: var(--white);
+  border: 3px solid var(--black);
+}
+
+/* ---------- Tablet + mobile ---------- */
+
+@media (max-width: 899px) {
+  .toolkit {
+    padding: 0 16px 64px;
+    gap: 32px;
+  }
+
+  .toolkit-slab {
+    --slab-shadow: 5px;
+
+    border-width: 4px;
+  }
+
+  .toolkit-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .toolkit-row + .toolkit-row {
+    border-top-width: 4px;
+  }
+
+  .toolkit-label {
+    padding: 10px 14px;
+    font-size: 22px;
+    border-right: 0;
+    border-bottom: 4px solid var(--black);
+  }
+
+  .toolkit-tools {
+    padding: 16px 14px;
+  }
+
+  .toolkit-list {
+    gap: 8px;
+  }
+
+  .toolkit-chip {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+}

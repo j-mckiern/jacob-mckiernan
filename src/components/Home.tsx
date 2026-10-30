@@ -3,8 +3,9 @@ import { sections } from '../data/sections'
 import About from './About'
 import Hero from './Hero'
 import Projects from './Projects'
+import Toolkit from './Toolkit'
 
-const built = ['about', 'projects']
+const built = ['about', 'projects', 'toolkit']
 
 function Home() {
   // The browser only jumps to a #hash when the page loads, before React has drawn
@@ -19,6 +20,7 @@ function Home() {
       <Hero />
       <About />
       <Projects />
+      <Toolkit />
 
       {/* Placeholders for the sections not built yet. */}
       {sections.filter((section) => !built.includes(section.id)).map((section) => (

@@ -8,7 +8,7 @@
   (where every label is an opaque box) or in the screen's outer edges.
 */
 
-export type ShardSection = 'hero' | 'about' | 'projects'
+export type ShardSection = 'hero' | 'about' | 'projects' | 'toolkit'
 
 export type Shard = {
   tone: 'hl-1' | 'hl-2' | 'hl-3' | 'ink'
@@ -36,6 +36,28 @@ const aboutSide = { top: '170px', bottom: '0' }
 // Stops above the nav offset, and the cap keeps them from stretching down a long
 // /projects page.
 const projectsBox = { top: '-44px', height: 'min(calc(100% - 82px), 1300px)' }
+// Toolkit's shards sit in a wrapper around the slab, so these measure from its edges.
+// Both ribbons share --ribbon-h (Toolkit.css) and slide the same distance behind it.
+const RIBBON_TUCK = '36px'
+const ribbonHigh = { top: `calc(${RIBBON_TUCK} - var(--ribbon-h))`, height: 'var(--ribbon-h)' }
+const ribbonLow = { top: `calc(100% - ${RIBBON_TUCK})`, height: 'var(--ribbon-h)' }
+
+/** One ribbon's slanted strips, all rising or all falling. A ribbon is one layer of
+    each in two colors, which is what makes it look folded. `x` is its left edge in
+    percent of the box. A zero-width line joins the strips into a single clip-path. */
+function ribbon(x: number, strips: 'rising' | 'falling', count: number) {
+  const shape =
+    strips === 'rising'
+      ? [[0, 100], [5.13, 100], [10.9, 0], [5.77, 0]]
+      : [[5.77, 0], [10.9, 0], [16.03, 100], [10.9, 100]]
+  const points: string[] = []
+  for (let fold = 0; fold < count; fold++) {
+    const left = x + fold * 10.9
+    const strip = shape.map(([px, py]) => `${(left + px).toFixed(2)}% ${py}%`)
+    points.push(...strip, strip[0], `${x + shape[0][0]}% ${shape[0][1]}%`)
+  }
+  return `polygon(${points.join(', ')})`
+}
 
 export const shards: Record<ShardSection, Shard[]> = {
   hero: [
@@ -47,6 +69,15 @@ export const shards: Record<ShardSection, Shard[]> = {
     { ...aboutSide, tone: 'hl-1', depth: 8, rate: 0.03, rail: 'left', outlined: true, points: 'polygon(0 0, 62% 8%, 30% 20%, 78% 36%, 40% 54%, 88% 72%, 25% 90%, 0 100%)' },
     { ...aboutSide, tone: 'hl-2', depth: 8, rate: 0.03, rail: 'right', outlined: true, points: 'polygon(100% 0, 40% 7%, 70% 22%, 18% 38%, 58% 54%, 12% 73%, 62% 88%, 100% 100%)' },
     { ...aboutBand, tone: 'hl-3', depth: 16, rate: 0.06, outlined: true, points: 'polygon(100% 0, 58% 0, 49% 22%, 56% 35%, 44% 62%, 61% 54%, 70% 100%, 81% 72%, 90% 92%, 100% 66%)' },
+  ],
+  // Folded ribbons, with their colors swapped so the lower one isn't a plain copy.
+  // Each runs in from off screen and ends behind the slab, so no end ever shows.
+  // They drift less than other shards, so they never pull out from behind it.
+  toolkit: [
+    { ...ribbonHigh, tone: 'hl-2', depth: 8, rate: 0.03, outlined: true, points: ribbon(51.28, 'rising', 4) },
+    { ...ribbonHigh, tone: 'hl-3', depth: 12, rate: 0.05, outlined: true, points: ribbon(51.28, 'falling', 4) },
+    { ...ribbonLow, tone: 'hl-3', depth: 8, rate: 0.03, outlined: true, points: ribbon(-2, 'rising', 5) },
+    { ...ribbonLow, tone: 'hl-2', depth: 12, rate: 0.05, outlined: true, points: ribbon(-2, 'falling', 4) },
   ],
   // Small fragments that stay in the side margins and the strip beside the heading.
   projects: [
