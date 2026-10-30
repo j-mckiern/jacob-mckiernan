@@ -1,8 +1,4 @@
-# jacob-mckiernan
-
-Jacob McKiernan's one-page developer portfolio. It has a loud zine / manga-panel look, five color palettes, a light and dark mode, and a mascot whose eyes follow your cursor.
-
-Built with **Vite + React + TypeScript** and plain CSS custom properties, and deployed on **Vercel**.
+My developer portfolio. Built with **Vite + React + TypeScript** and plain CSS custom properties, and deployed on **Vercel**.
 
 ## Run it
 
