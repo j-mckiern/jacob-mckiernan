@@ -127,6 +127,16 @@
      dark text, so they have to be bright. */
   --glitch-1: var(--c);
   --glitch-2: var(--b);
+  --glitch-text-1: var(--glitch-1);
+  --glitch-text-2: var(--glitch-2);
+  /* How far the split text travels, as a multiple of its normal distance. */
+  --glitch-reach: 1;
+
+  /* The hard shadow behind a block filled with --hl-N, so a block never sits on a
+     shadow of its own color. */
+  --hl-1-shadow: var(--panel-shadow);
+  --hl-2-shadow: var(--panel-shadow);
+  --hl-3-shadow: var(--panel-shadow);
 
   /* Always the light-mode text color, for labels on cards that stay white. */
   --text-a-on-white: var(--_text-a-light);
@@ -158,6 +168,9 @@
   --fg-invert: var(--black);
   /* A black shadow vanishes on a dark page, so panels get the colored one. */
   --panel-shadow: var(--shadow-pop);
+  --hl-1-shadow: var(--hl-2);
+  --hl-2-shadow: var(--hl-3);
+  --hl-3-shadow: var(--hl-2);
   --text-a: var(--_text-a-dark);
   --text-b: var(--_text-b-dark);
   --texture: radial-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1.3px);
@@ -180,8 +193,15 @@
   --hl-2-fg: var(--b-fg);
   --hl-3: var(--a);
   --hl-3-fg: var(--a-fg);
+  /* Its second highlight is black in light mode, on black shadows. */
+  --hl-2-shadow: var(--hl-1);
   /* Two purples, since black smears and white vanishes on Slate's white blocks. */
   --glitch-2: var(--_text-a-dark);
+  /* Two tints of one hue merge into a bar through the word instead of splitting,
+     so they stay pale and only reach far enough to fringe the letters. */
+  --glitch-text-1: var(--_text-a-dark);
+  --glitch-text-2: color-mix(in srgb, var(--_text-a-dark) 45%, var(--white));
+  --glitch-reach: 0.4;
 }
 
 [data-palette='slate'][data-mode='dark'] {

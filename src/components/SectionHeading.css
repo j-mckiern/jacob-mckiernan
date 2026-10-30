@@ -32,7 +32,7 @@
   /* Slides against the pointer, as if lit from where the pointer is. */
   box-shadow:
     calc(var(--label-shadow) + var(--pointer-x, 0) * -5px) calc(var(--label-shadow) + var(--pointer-y, 0) * -5px) 0
-    var(--panel-shadow);
+    var(--tone-shadow);
   transform: rotate(-1.5deg);
 }
 
@@ -62,7 +62,7 @@
     0% {
       clip-path: inset(0 0 58% 0);
       transform: translateX(14px) rotate(-1.5deg);
-      text-shadow: -6px 0 var(--glitch-1), 6px 0 var(--glitch-2);
+      text-shadow: -6px 0 var(--glitch-text-1), 6px 0 var(--glitch-text-2);
     }
     20% {
       clip-path: inset(46% 0 0 0);
@@ -71,7 +71,7 @@
     40% {
       clip-path: inset(0 -20px -20px -20px);
       transform: translateX(6px) rotate(-1.5deg);
-      text-shadow: 4px 0 var(--glitch-1), -4px 0 var(--glitch-2);
+      text-shadow: 4px 0 var(--glitch-text-1), -4px 0 var(--glitch-text-2);
     }
     70% {
       transform: translateX(-2px) rotate(-1.5deg);
@@ -81,16 +81,22 @@
 }
 
 .section-label.hl-1 {
+  --tone-shadow: var(--hl-1-shadow);
+
   color: var(--hl-1-fg);
   background: var(--hl-1);
 }
 
 .section-label.hl-2 {
+  --tone-shadow: var(--hl-2-shadow);
+
   color: var(--hl-2-fg);
   background: var(--hl-2);
 }
 
 .section-label.hl-3 {
+  --tone-shadow: var(--hl-3-shadow);
+
   color: var(--hl-3-fg);
   background: var(--hl-3);
 }

@@ -21,8 +21,6 @@ function ProjectCard({ project, index }: Props) {
       data-tilt
       style={{ '--reveal-i': index } as CSSProperties}
     >
-      <span className="project-tape" aria-hidden="true" />
-
       <div className="project-media">
         {project.video && project.image ? (
           <video

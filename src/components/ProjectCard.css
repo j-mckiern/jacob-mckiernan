@@ -1,11 +1,12 @@
 /*
-  A flyer taped to the page. The card stays white in both modes, so its text uses
+  A flyer on the page. The card stays white in both modes, so its text uses
   the fixed --black, never --fg. The top is a screenshot slot; the bottom is copy.
 */
 .project-card {
   --card-shadow: 8px;
   --tone: var(--hl-1);
   --tone-fg: var(--hl-1-fg);
+  --tone-shadow: var(--hl-1-shadow);
 
   position: relative;
   display: flex;
@@ -16,35 +17,19 @@
   /* Slides against the pointer, as if lit from where the pointer is. */
   box-shadow:
     calc(var(--card-shadow) + var(--pointer-x, 0) * -5px) calc(var(--card-shadow) + var(--pointer-y, 0) * -5px) 0
-    var(--panel-shadow);
+    var(--tone-shadow);
 }
 
 .project-tone-2 {
   --tone: var(--hl-2);
   --tone-fg: var(--hl-2-fg);
+  --tone-shadow: var(--hl-2-shadow);
 }
 
 .project-tone-3 {
   --tone: var(--hl-3);
   --tone-fg: var(--hl-3-fg);
-}
-
-.project-tape {
-  position: absolute;
-  z-index: 2;
-  top: -19px;
-  left: 34px;
-  width: 124px;
-  height: 34px;
-  background: color-mix(in srgb, var(--paper) 82%, transparent);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--black) 35%, transparent);
-  transform: rotate(-5deg);
-}
-
-.project-card:nth-child(even) .project-tape {
-  left: auto;
-  right: 34px;
-  transform: rotate(4deg);
+  --tone-shadow: var(--hl-3-shadow);
 }
 
 /* ---------- Screenshot slot ---------- */
@@ -257,15 +242,5 @@
 
   .project-body {
     padding: 28px 18px 20px;
-  }
-
-  .project-tape {
-    left: 20px;
-    width: 96px;
-    height: 28px;
-  }
-
-  .project-card:nth-child(even) .project-tape {
-    right: 20px;
   }
 }
