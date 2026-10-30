@@ -1,0 +1,63 @@
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Flips with the mode so the chip never vanishes into a dark page. */
+.section-num {
+  padding: 10px 12px;
+  font-family: var(--font-label);
+  font-size: 16px;
+  line-height: 1;
+  color: var(--fg-invert);
+  background: var(--fg);
+}
+
+.section-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6.5vw, 84px);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.section-label {
+  display: inline-block;
+  padding: 0.07em 0.26em;
+  border: 5px solid var(--black);
+  box-shadow: 8px 8px 0 var(--panel-shadow);
+  transform: rotate(-1.5deg);
+}
+
+.section-label.hl-1 {
+  color: var(--hl-1-fg);
+  background: var(--hl-1);
+}
+
+.section-label.hl-2 {
+  color: var(--hl-2-fg);
+  background: var(--hl-2);
+}
+
+.section-label.hl-3 {
+  color: var(--hl-3-fg);
+  background: var(--hl-3);
+}
+
+@media (max-width: 899px) {
+  .section-heading {
+    gap: 12px;
+  }
+
+  .section-num {
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .section-label {
+    border-width: 4px;
+    box-shadow: 5px 5px 0 var(--panel-shadow);
+  }
+}

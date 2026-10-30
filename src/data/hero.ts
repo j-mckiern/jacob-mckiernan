@@ -16,7 +16,7 @@ export type Hero = {
 export const hero: Hero = {
   oneLiner:
     'If I can imagine it, I can make it. Turning ideas into reality is what I enjoy.',
-  currently: 'Full-stack developer @ Sitebolts',
+  currently: 'Full-stack engineer @ Sitebolts',
   openTo: 'Full-time · Contract',
   mascot: {
     label: 'Poke the mascot',

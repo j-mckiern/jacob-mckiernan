@@ -8,6 +8,9 @@
   --font-marker: 'Permanent Marker', cursive;
   --font-graffiti: 'Sedgwick Ave Display', cursive;
   --font-mono: 'Space Mono', ui-monospace, monospace;
+
+  /* Where a nav jump lands: the sticky header's height plus a little room. */
+  --nav-offset: 120px;
 }
 
 *,
@@ -50,7 +53,7 @@ main:focus {
 /* Anchor jumps stop below the sticky header instead of underneath it. */
 main,
 section[id] {
-  scroll-margin-top: 96px;
+  scroll-margin-top: var(--nav-offset);
 }
 
 /* Off-screen until a keyboard user tabs to it. */

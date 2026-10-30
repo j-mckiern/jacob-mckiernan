@@ -26,7 +26,9 @@
 
   max-width: 1280px;
   margin: 0 auto;
-  padding: 40px 40px 96px;
+  /* The bottom clears --nav-offset plus the 8px shadow, so a jump to the next
+     section doesn't leave a sliver of the hero above the header. */
+  padding: 40px 40px 136px;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--gap);
@@ -378,7 +380,7 @@
     --gap: 22px;
 
     grid-template-columns: minmax(0, 1fr);
-    padding: 24px 16px 64px;
+    padding: 24px 16px 128px;
   }
 
   .hero-name,

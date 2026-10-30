@@ -1,4 +1,5 @@
 import Header from './components/Header'
+import About from './components/About'
 import Hero from './components/Hero'
 import { sections } from './data/sections'
 
@@ -14,8 +15,10 @@ function App() {
       {/* tabIndex lets the skip link move keyboard focus here, not just scroll. */}
       <main id="main" tabIndex={-1}>
         <Hero />
+        <About />
 
-        {sections.map((section) => (
+        {/* Placeholders for the sections not built yet. */}
+        {sections.filter((section) => section.id !== 'about').map((section) => (
           <section
             key={section.id}
             id={section.id}
