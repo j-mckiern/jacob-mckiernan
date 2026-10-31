@@ -70,6 +70,8 @@
   width: calc(100% - var(--inset) * 2);
   height: calc(100% - var(--inset) * 2);
   object-fit: cover;
+  /* Fills the bars around a contained image. */
+  background: var(--black);
   border: 4px solid var(--black);
 }
 
@@ -250,6 +252,21 @@
   }
 }
 
+/* ---------- Alone on the last row ---------- */
+
+/* An odd card out takes the whole row instead of leaving half of it empty. Its media
+   follows the card's width, so a wide screenshot gets big enough to read. */
+@media (min-width: 900px) {
+  .projects-grid > .project-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .projects-grid > .project-card:last-child:nth-child(odd) .project-media {
+    height: auto;
+    aspect-ratio: 3.15;
+  }
+}
+
 /* ---------- Tablet + mobile ---------- */
 
 /* The stack and the buttons stop sharing a row when the card gets narrow. */
@@ -282,6 +299,12 @@
 
     height: 200px;
     border-bottom-width: 4px;
+  }
+
+  /* Hugs a wide contained image, so it doesn't float in empty bars. */
+  .project-media-contain {
+    height: auto;
+    aspect-ratio: 2.6;
   }
 
   .project-body {
