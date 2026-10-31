@@ -248,7 +248,7 @@
 
 .status-label {
   font-family: var(--font-label);
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
 }
 
@@ -461,6 +461,12 @@
 /* 3 columns is too narrow for the status card here, so the stage sits beside
    the name only and the two cards share the row underneath. */
 @media (max-width: 1279px) {
+  /* The name panel no longer spans two rows, so the mockup's height would leave
+     the tiles floating and push the cards below the fold. */
+  .hero-name {
+    min-height: 460px;
+  }
+
   .hero-stage {
     grid-row: auto;
     min-height: 0;
@@ -546,14 +552,10 @@
 
   .status-item,
   .status-item + .status-item {
-    padding: 16px;
+    padding: 16px 12px;
     background: var(--white);
     border: var(--border) solid var(--black);
     box-shadow: var(--shadow) var(--shadow) 0 var(--panel-shadow);
-  }
-
-  .status-label {
-    font-size: 9px;
   }
 
   .status-value {
@@ -566,13 +568,14 @@
     gap: 14px;
   }
 
+  /* Sized by their text, so LinkedIn gets the room it needs on a narrow phone. */
   .find-links {
+    grid-template-columns: repeat(3, auto);
     gap: 8px;
   }
 
   .find-link {
     min-height: 48px;
     padding: 0 4px;
-    font-size: 10px;
   }
 }

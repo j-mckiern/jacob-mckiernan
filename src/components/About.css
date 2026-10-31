@@ -13,7 +13,8 @@
   min-height: calc(100vh - var(--nav-offset));
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  /* Tightens on short laptops so the last entry still fits after a nav jump. */
+  gap: clamp(20px, calc((100vh - 520px) / 10), 32px);
 }
 
 /* ---------- Caption box ---------- */
@@ -106,7 +107,7 @@
 .journey-stop {
   /* Taller screens get more room between entries, up to a limit. Short ones
      stay tight so the section still fits. */
-  padding-bottom: clamp(56px, calc(56px + (100vh - 820px) / 2), 170px);
+  padding-bottom: clamp(32px, calc(56px + (100vh - 820px) / 2), 170px);
   display: grid;
   grid-template-columns: var(--date) var(--rail) minmax(0, 1fr);
   grid-template-areas: 'when node body';
@@ -291,7 +292,10 @@
 /* ---------- Tablet + mobile ---------- */
 
 @media (max-width: 899px) {
+  /* One tall column can't fit a screen anyway, and the extra height would only
+     leave a gap under the timeline on tablets. */
   .about {
+    min-height: 0;
     padding: 0 16px 64px;
     gap: 24px;
   }

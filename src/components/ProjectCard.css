@@ -254,6 +254,11 @@
 
 /* The stack and the buttons stop sharing a row when the card gets narrow. */
 @media (max-width: 1099px) {
+  /* The copy wraps more and the foot is taller here, so the image gives way. */
+  .project-media {
+    height: clamp(150px, calc(100vh - 640px), 330px);
+  }
+
   .project-foot {
     flex-direction: column;
     align-items: stretch;

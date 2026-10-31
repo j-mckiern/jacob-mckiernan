@@ -156,6 +156,7 @@
 
 @media (max-width: 899px) {
   .toolkit {
+    min-height: 0;
     padding: 0 16px 64px;
     gap: 32px;
   }
