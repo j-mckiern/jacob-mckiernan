@@ -10,8 +10,6 @@ npm run preview   # serve dist/ locally to check the production build
 npm run lint      # ESLint (TypeScript, React hooks, accessibility rules)
 ```
 
-Run `npm run build` and `npm run lint` before you call a section done.
-
 ## Project layout
 
 ```
@@ -33,4 +31,4 @@ Two attributes on `<html>` control the colors: `data-palette` (`sour-patch | ove
 
 ## Deploy
 
-The repo is connected to Vercel. A push to `main` deploys to production. Every other branch gets a preview URL. Secrets such as a GitHub token go in Vercel environment variables, never in `src/`.
+The repo is connected to Vercel. A push to `main` deploys to production. Every other branch gets a preview URL.
