@@ -211,6 +211,22 @@
   display: none;
 }
 
+/* Equal outer columns keep the nav centered however wide the logo and controls are. */
+@media (min-width: 900px) {
+  .header-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  .logo {
+    justify-self: start;
+  }
+
+  .header-controls {
+    justify-self: end;
+  }
+}
+
 @media (max-width: 899px) {
   .site-header {
     padding: 0 16px;

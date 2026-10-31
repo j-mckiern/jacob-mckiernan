@@ -3,8 +3,9 @@ import { Link, useLocation } from 'react-router'
 import { sections, type Section } from '../data/sections'
 import { site } from '../data/site'
 import { useActiveSection } from '../hooks/useActiveSection'
+import { useMotion } from '../hooks/useMotion'
 import { useTheme } from '../hooks/useTheme'
-import { ModeToggle, PalettePicker, PaletteSwatches } from './ThemeControls'
+import { ModeToggle, MotionToggle, PalettePicker, PaletteSwatches } from './ThemeControls'
 import './Header.css'
 
 // Module-level so the array keeps the same identity between renders
@@ -40,6 +41,7 @@ function SectionLink({ id, onHome, children, ...props }: SectionLinkProps) {
 function Header() {
   // The one place theme state lives; every control below reads from it.
   const { palette, setPalette, mode, toggleMode } = useTheme()
+  const { paused, toggleMotion } = useMotion()
   const { pathname } = useLocation()
   const onHome = pathname === '/'
   const spied = useActiveSection(observedIds, pathname)
@@ -92,6 +94,7 @@ function Header() {
             <PalettePicker palette={palette} onPick={setPalette} />
           </div>
           <ModeToggle mode={mode} onToggle={toggleMode} />
+          <MotionToggle paused={paused} onToggle={toggleMotion} />
           <ResumeLink className="resume-link desktop-only pop" />
           <button
             ref={menuButton}

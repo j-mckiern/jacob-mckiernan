@@ -89,6 +89,23 @@ type ModeToggleProps = {
   onToggle: () => void
 }
 
+type MotionToggleProps = {
+  paused: boolean
+  onToggle: () => void
+}
+
+export function MotionToggle({ paused, onToggle }: MotionToggleProps) {
+  const label = paused ? 'Play animations' : 'Pause animations'
+
+  return (
+    <button type="button" className="mode-toggle motion-toggle" aria-label={label} title={label} onClick={onToggle}>
+      <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+        {paused ? <path d="M3 1 14 8 3 15Z" /> : <path d="M2 1h4v14H2zM10 1h4v14h-4z" />}
+      </svg>
+    </button>
+  )
+}
+
 export function ModeToggle({ mode, onToggle }: ModeToggleProps) {
   const isDark = mode === 'dark'
 

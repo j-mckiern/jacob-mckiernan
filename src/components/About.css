@@ -160,7 +160,14 @@
 /* Waiting for the line to reach it. */
 .journey-stop:not(.is-lit) .journey-when,
 .journey-stop:not(.is-lit) .journey-body {
-  opacity: 0.35;
+  opacity: 0.65;
+}
+
+/* The labels' palette colors can't stay readable while dimmed, so they wait in the
+   page's text color and take their color when the line arrives. */
+.journey-stop:not(.is-lit) .journey-when,
+.journey-stop:not(.is-lit) .journey-org {
+  color: var(--fg);
 }
 
 .journey-stop.is-lit .journey-node {

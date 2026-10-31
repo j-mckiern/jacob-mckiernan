@@ -1,5 +1,6 @@
-import type { CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import type { Project } from '../data/projects'
+import { useMotion } from '../hooks/useMotion'
 import './ProjectCard.css'
 
 type Props = {
@@ -10,6 +11,46 @@ type Props = {
 
 // With reduced motion, a video stays on its still poster.
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+/** Downloads only once it's near the screen, and only plays while it's there. */
+function ProjectVideo({ src, image }: { src: string; image: NonNullable<Project['image']> }) {
+  const video = useRef<HTMLVideoElement>(null)
+  const { paused } = useMotion()
+  const [near, setNear] = useState(false)
+
+  useEffect(() => {
+    if (!video.current || reduceMotion) return
+    const observer = new IntersectionObserver(([entry]) => setNear(entry.isIntersecting), { rootMargin: '200px' })
+    observer.observe(video.current)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const element = video.current
+    if (!element) return
+    if (near && !paused) {
+      // Set by hand, not as a prop, so it stays once loaded and the poster shows until then.
+      if (!element.getAttribute('src')) element.src = src
+      // Rejects if a pause lands first, or the browser blocks autoplay. The poster stays.
+      element.play().catch(() => {})
+    } else {
+      element.pause()
+    }
+  }, [near, paused, src])
+
+  return (
+    <video
+      ref={video}
+      className="project-image"
+      poster={image.src}
+      aria-label={image.alt}
+      muted
+      loop
+      playsInline
+      style={{ objectPosition: image.focus }}
+    />
+  )
+}
 
 function ProjectCard({ project, index }: Props) {
   // Rotates through hl-1, hl-2, hl-3 so neighbors never match.
@@ -23,18 +64,7 @@ function ProjectCard({ project, index }: Props) {
     >
       <div className="project-media">
         {project.video && project.image ? (
-          <video
-            className="project-image"
-            src={project.video}
-            poster={project.image.src}
-            aria-label={project.image.alt}
-            autoPlay={!reduceMotion}
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            style={{ objectPosition: project.image.focus }}
-          />
+          <ProjectVideo src={project.video} image={project.image} />
         ) : project.image ? (
           <img
             className="project-image"

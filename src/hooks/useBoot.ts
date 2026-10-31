@@ -2,9 +2,10 @@ import { useCallback, useState } from 'react'
 
 const BOOTED_KEY = 'booted'
 
-// Once per browser tab session, and never for reduced motion.
+// Once per browser tab session, and never for reduced motion or paused animations.
 function shouldBoot() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
+  if (document.documentElement.dataset.motion === 'paused') return false
   try {
     return sessionStorage.getItem(BOOTED_KEY) === null
   } catch {

@@ -9,7 +9,7 @@
 
     <!--
       Runs before the first paint so returning visitors never see the wrong theme flash in.
-      Keep the storage keys in sync with src/hooks/useTheme.ts.
+      Keep the storage keys in sync with src/hooks/useTheme.ts and useMotion.ts.
     -->
     <script>
       ;(function () {
@@ -19,6 +19,7 @@
         try {
           palette = localStorage.getItem('theme-palette')
           mode = localStorage.getItem('theme-mode')
+          if (localStorage.getItem('motion') === 'paused') root.dataset.motion = 'paused'
         } catch (e) {}
         if (palette) root.dataset.palette = palette
         if (mode === 'light' || mode === 'dark') root.dataset.mode = mode

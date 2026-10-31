@@ -51,7 +51,7 @@
   width: 252px;
 }
 
-/* ---------- Mode toggle ---------- */
+/* ---------- Mode toggle + pause button ---------- */
 
 .mode-toggle {
   width: 44px;
@@ -63,4 +63,15 @@
   border: 3px solid var(--black);
   box-shadow: 3px 3px 0 var(--shadow-pop);
   cursor: pointer;
+}
+
+.motion-toggle svg {
+  margin: auto;
+}
+
+/* The system setting already stops the motion, so the button would do nothing. */
+@media (prefers-reduced-motion: reduce) {
+  .motion-toggle {
+    display: none;
+  }
 }

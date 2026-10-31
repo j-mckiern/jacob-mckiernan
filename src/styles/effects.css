@@ -84,6 +84,16 @@
   }
 }
 
+/* ---------- Paused (see useMotion) ---------- */
+
+/* The header's pause button. `none` rather than a paused play state: a paused entrance
+   would freeze blocks at its invisible first frame. */
+[data-motion='paused'] *,
+[data-motion='paused'] *::before,
+[data-motion='paused'] *::after {
+  animation: none !important;
+}
+
 /* ---------- Tilt (see useDepth) ---------- */
 
 /* Mouse only: a tilt driven by a finger would just look broken. */
