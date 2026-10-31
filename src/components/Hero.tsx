@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { hero } from '../data/hero'
 import { site } from '../data/site'
+import ExternalLink from './ExternalLink'
 import Mascot from './Mascot'
 import Shards from './Shards'
 import './Hero.css'
@@ -46,15 +47,6 @@ function LetterTiles({ word, tileFor }: { word: string; tileFor: (i: number) => 
       </span>
     )
   })
-}
-
-function ExternalLink({ href, label, className }: { href: string; label: string; className: string }) {
-  return (
-    <a className={className} href={href} target="_blank" rel="noreferrer">
-      {label} <span aria-hidden="true">↗</span>
-      <span className="sr-only"> (opens in a new tab)</span>
-    </a>
-  )
 }
 
 /** Staggers the blocks' entrance, in reading order. */

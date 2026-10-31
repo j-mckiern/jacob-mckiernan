@@ -11,6 +11,7 @@
 
   /* Where a nav jump lands: the sticky header's height plus a little room. */
   --nav-offset: 120px;
+  --footer-h: 72px;
 }
 
 *,
@@ -138,11 +139,4 @@ textarea {
 
 a {
   color: inherit;
-}
-
-/* TEMPORARY: gives unbuilt sections real height so scrolling can be tested.
-   Remove each section's class as it's built; delete this rule after Contact. */
-.placeholder {
-  min-height: 80vh;
-  padding: 24px 40px;
 }

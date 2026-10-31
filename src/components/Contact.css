@@ -1,0 +1,224 @@
+.contact {
+  max-width: 1280px;
+  /* The margin pushes Toolkit fully above the nav jump's landing spot. */
+  margin: 32px auto 0;
+  padding: 0 40px 28px;
+  /* Nothing sits below the footer, so section + footer have to add up to exactly
+     what's left under the nav offset, or the jump can't land on the heading. */
+  min-height: calc(100vh - var(--nav-offset) - var(--footer-h));
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.contact-stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+.contact-poster {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+/* The filter goes on this parent because clip-path would cut off a box-shadow.
+   Four copies make the outline, the last is the hard shadow. */
+.contact-sheet {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(4px 0 0 var(--black)) drop-shadow(-4px 0 0 var(--black))
+    drop-shadow(0 4px 0 var(--black)) drop-shadow(0 -4px 0 var(--black))
+    drop-shadow(8px 8px 0 var(--hl-1-shadow));
+}
+
+/* Torn along the top and bottom. Halftone dots over the color, like the toolkit labels. */
+.contact-sheet-fill {
+  position: absolute;
+  inset: 0;
+  background-color: var(--hl-1);
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--black) 14%, transparent) 1.3px,
+    transparent 1.6px
+  );
+  background-size: 9px 9px;
+  clip-path: polygon(
+    0 3%, 4% 0, 9% 2%, 14% 0, 20% 3%, 26% 1%, 31% 3%, 38% 0, 44% 2%, 50% 0, 57% 3%, 63% 1%, 70% 3%, 76% 0, 82% 2%, 88% 0, 94% 3%, 100% 1%,
+    100% 97%, 95% 100%, 89% 98%, 83% 100%, 77% 97%, 71% 100%, 64% 98%, 58% 100%, 52% 97%, 45% 100%, 39% 98%, 33% 100%, 26% 97%, 20% 100%, 13% 98%, 7% 100%, 0 97%
+  );
+}
+
+.contact-body {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 4vh, 44px);
+  padding: 28px 32px;
+}
+
+/* The default ring follows the mode and would turn pale on this bright block. */
+.contact-body :focus-visible {
+  outline-color: var(--black);
+}
+
+/* ---------- SAY HI ! ---------- */
+
+.contact-shout {
+  /* Follows the screen's height too, so the poster fits a short screen and fills
+     out a tall one. */
+  --shout-size: clamp(56px, min(11vw, 27vh - 50px), 190px);
+
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  line-height: 1;
+}
+
+.contact-tile {
+  padding: 0.04em 0.16em;
+  border: 5px solid var(--black);
+}
+
+.contact-tile-say {
+  font-family: var(--font-display);
+  font-size: var(--shout-size);
+  color: var(--black);
+  background: var(--white);
+  transform: rotate(-4deg);
+}
+
+.contact-tile-hi {
+  font-family: var(--font-label);
+  font-size: calc(var(--shout-size) * 0.9);
+  color: var(--hl-2-fg);
+  background: var(--hl-2);
+  transform: rotate(3deg);
+}
+
+/* Slate dark's 2nd highlight is white, the same as SAY beside it. */
+[data-palette='slate'] .contact-tile-hi {
+  color: var(--white);
+  background: var(--black);
+}
+
+.contact-bang {
+  font-family: var(--font-display);
+  font-size: var(--shout-size);
+  color: var(--black);
+  transform: rotate(-6deg);
+}
+
+/* ---------- Links ---------- */
+
+/* One row at one height. The address stands out by being the longest and the only
+   one with a color block, not by being bigger. */
+.contact-links {
+  --link-h: 52px;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.contact-email {
+  display: flex;
+  align-items: stretch;
+  min-height: var(--link-h);
+  color: var(--black);
+  text-decoration: none;
+  background: var(--white);
+  border: 3px solid var(--black);
+}
+
+.contact-email-address {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-family: var(--font-type);
+  font-size: clamp(14px, 3.9vw, 18px);
+  white-space: nowrap;
+}
+
+.contact-email-arrow {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-family: var(--font-label);
+  font-size: 16px;
+  color: var(--hl-2-fg);
+  background: var(--hl-2);
+  border-left: 3px solid var(--black);
+}
+
+/* Slate dark's 2nd highlight is white, which would vanish into the label. */
+[data-palette='slate'] .contact-email-arrow {
+  color: var(--white);
+  background: var(--black);
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: var(--link-h);
+  padding: 0 18px;
+  font-family: var(--font-label);
+  font-size: 12px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--black);
+  background: var(--white);
+  border: 3px solid var(--black);
+}
+
+/* ---------- Tablet + mobile ---------- */
+
+@media (max-width: 899px) {
+  .contact {
+    padding: 0 16px 24px;
+    gap: 32px;
+  }
+
+  .contact-sheet {
+    filter: drop-shadow(3px 0 0 var(--black)) drop-shadow(-3px 0 0 var(--black))
+      drop-shadow(0 3px 0 var(--black)) drop-shadow(0 -3px 0 var(--black))
+      drop-shadow(5px 5px 0 var(--hl-1-shadow));
+  }
+
+  .contact-body {
+    padding: 48px 16px;
+    gap: 28px;
+  }
+
+  .contact-shout {
+    /* Small enough that SAY, HI and ! always share one line down to 360px. */
+    --shout-size: clamp(50px, 14.5vw, 110px);
+
+    gap: 8px;
+  }
+
+  .contact-tile {
+    border-width: 4px;
+  }
+
+  /* The address takes a row of its own, with the other links sharing the next. */
+  .contact-links-email {
+    width: 100%;
+  }
+
+  .contact-email-address {
+    flex: 1;
+    justify-content: center;
+    padding: 0 8px;
+  }
+}

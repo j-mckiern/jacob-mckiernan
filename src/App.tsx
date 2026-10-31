@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router'
 import Cursor from './components/Cursor'
+import Footer from './components/Footer'
 import Header from './components/Header'
 import Home from './components/Home'
 import Loader from './components/Loader'
@@ -34,9 +35,7 @@ function App() {
         </Routes>
       </main>
 
-      <footer>
-        <a href="#top">back to top ↑</a>
-      </footer>
+      <Footer />
     </>
   )
 }

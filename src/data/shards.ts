@@ -8,7 +8,7 @@
   (where every label is an opaque box) or in the screen's outer edges.
 */
 
-export type ShardSection = 'hero' | 'about' | 'projects' | 'toolkit'
+export type ShardSection = 'hero' | 'about' | 'projects' | 'toolkit' | 'contact'
 
 export type Shard = {
   tone: 'hl-1' | 'hl-2' | 'hl-3' | 'ink'
@@ -41,6 +41,9 @@ const projectsBox = { top: '-44px', height: 'min(calc(100% - 82px), 1300px)' }
 const RIBBON_TUCK = '36px'
 const ribbonHigh = { top: `calc(${RIBBON_TUCK} - var(--ribbon-h))`, height: 'var(--ribbon-h)' }
 const ribbonLow = { top: `calc(100% - ${RIBBON_TUCK})`, height: 'var(--ribbon-h)' }
+// Contact's also measure from the poster. They fill the strip beside the heading,
+// and the bottom of the box hides behind the poster.
+const contactBand = { top: '-180px', height: '270px' }
 
 /** One ribbon's slanted strips, all rising or all falling. A ribbon is one layer of
     each in two colors, which is what makes it look folded. `x` is its left edge in
@@ -78,6 +81,13 @@ export const shards: Record<ShardSection, Shard[]> = {
     { ...ribbonHigh, tone: 'hl-3', depth: 12, rate: 0.05, outlined: true, points: ribbon(51.28, 'falling', 4) },
     { ...ribbonLow, tone: 'hl-3', depth: 8, rate: 0.03, outlined: true, points: ribbon(-2, 'rising', 5) },
     { ...ribbonLow, tone: 'hl-2', depth: 12, rate: 0.05, outlined: true, points: ribbon(-2, 'falling', 4) },
+  ],
+  // Two torn bands, echoing the poster's torn edge. They run in from off screen on
+  // the right and dive behind the poster, so no end ever shows. Their undersides rise
+  // to the right, because on a wide screen the margin beside the poster is open.
+  contact: [
+    { ...contactBand, tone: 'hl-2', depth: 8, rate: 0.03, outlined: true, points: 'polygon(100% 6%, 93% 0, 87% 15%, 80% 8%, 73% 26%, 66% 19%, 59% 42%, 52% 37%, 46% 100%, 78% 100%, 92% 76%, 100% 46%)' },
+    { ...contactBand, tone: 'hl-3', depth: 14, rate: 0.05, outlined: true, points: 'polygon(100% 32%, 94% 25%, 88% 41%, 81% 33%, 75% 56%, 69% 50%, 63% 100%, 80% 100%, 86% 88%, 90% 92%, 94% 72%, 97% 64%, 100% 52%)' },
   ],
   // Small fragments that stay in the side margins and the strip beside the heading.
   projects: [
