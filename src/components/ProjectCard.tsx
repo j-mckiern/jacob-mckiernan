@@ -62,7 +62,7 @@ function ProjectCard({ project, index }: Props) {
       data-tilt
       style={{ '--reveal-i': index } as CSSProperties}
     >
-      <div className="project-media">
+      <div className={`project-media${project.image?.contain ? ' project-media-contain' : ''}`}>
         {project.video && project.image ? (
           <ProjectVideo src={project.video} image={project.image} />
         ) : project.image ? (
@@ -71,10 +71,10 @@ function ProjectCard({ project, index }: Props) {
             src={project.image.src}
             srcSet={project.image.srcSet}
             // How wide the slot is, so the browser can pick a file before layout runs.
-            sizes="(max-width: 899px) calc(100vw - 72px), 540px"
+            sizes={project.image.sizes ?? '(max-width: 899px) calc(100vw - 72px), 540px'}
             alt={project.image.alt}
             loading="lazy"
-            style={{ objectPosition: project.image.focus }}
+            style={{ objectPosition: project.image.focus, objectFit: project.image.contain ? 'contain' : undefined }}
           />
         ) : (
           <span className="project-placeholder" aria-hidden="true">
