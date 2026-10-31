@@ -14,10 +14,13 @@
   color: var(--black);
   background: var(--white);
   border: 5px solid var(--black);
-  /* Slides against the pointer, as if lit from where the pointer is. */
-  box-shadow:
+  /* Slides against the pointer, as if lit from where the pointer is. A variable, so
+     the glitch below can return to it. */
+  --card-rest-shadow:
     calc(var(--card-shadow) + var(--pointer-x, 0) * -5px) calc(var(--card-shadow) + var(--pointer-y, 0) * -5px) 0
     var(--tone-shadow);
+
+  box-shadow: var(--card-rest-shadow);
 }
 
 .project-tone-2 {
@@ -203,6 +206,42 @@
 .project-link-code {
   color: var(--paper);
   background: var(--black);
+}
+
+/* Every few seconds a card glitches for a moment. This has to restate .reveal's slam
+   (effects.css): an element only gets one `animation` value, so setting the glitch
+   alone would cancel the entrance. The jolt is on `translate`, because `transform`
+   belongs to the slam and the tilt, and it's sideways only, so the card's shadow can't
+   peek in above the header on a jump to Toolkit. The text split inherits into the copy. */
+@media (prefers-reduced-motion: no-preference) {
+  .project-card.reveal.is-in {
+    animation:
+      slam 620ms cubic-bezier(0.2, 1.3, 0.4, 1) calc(var(--reveal-i, 0) * 75ms) backwards,
+      card-glitch 5.5s steps(1) calc(var(--reveal-i, 0) * -2.75s) infinite;
+  }
+
+  @keyframes card-glitch {
+    93% {
+      translate: 5px 0;
+      text-shadow: calc(2px * var(--glitch-reach)) 0 var(--glitch-text-1), calc(-2px * var(--glitch-reach)) 0 var(--glitch-text-2);
+      box-shadow: 11px 8px 0 var(--glitch-1), -5px -4px 0 var(--glitch-2);
+    }
+    94.5% {
+      translate: -4px 0;
+      text-shadow: calc(-2px * var(--glitch-reach)) 0 var(--glitch-text-1), calc(2px * var(--glitch-reach)) 0 var(--glitch-text-2);
+      box-shadow: -7px 8px 0 var(--glitch-2), 5px -4px 0 var(--glitch-1);
+    }
+    96% {
+      translate: 2px 0;
+      text-shadow: none;
+      box-shadow: var(--card-rest-shadow);
+    }
+    97.5% {
+      translate: 0 0;
+      text-shadow: none;
+      box-shadow: var(--card-rest-shadow);
+    }
+  }
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {

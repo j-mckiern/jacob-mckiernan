@@ -5,11 +5,13 @@ const TILT_DEGREES = 3
 // Before a section arrives, shards sit lower than their rest position. Capping
 // this keeps them from sliding down behind text while it scrolls up the screen.
 const MAX_SCROLL_BEFORE = -200
+const MAX_LEAN_DEGREES = 3
 
 /**
   Feeds pointer and scroll position to CSS, which does the drawing:
     --pointer-x/y   -1 to 1, on <html>: hard shadows and shards drift against it.
     --shard-scroll  on each .shards: px scrolled past that section's top.
+    --shard-lean    on <html>: degrees the shards skew, from how fast you're scrolling.
     --tilt-x/y      on the hovered [data-tilt] block: leans it toward the pointer.
   Touch screens only get the scroll part, and reduced motion gets none of it.
 */
@@ -20,6 +22,8 @@ export function useDepth() {
     const root = document.documentElement
     const goal = { x: 0, y: 0 }
     const now = { x: 0, y: 0 }
+    let lastScroll = window.scrollY
+    let lean = 0
     let raf = 0
     let tilted: HTMLElement | null = null
 
@@ -29,11 +33,16 @@ export function useDepth() {
       now.y += (goal.y - now.y) * 0.08
       root.style.setProperty('--pointer-x', now.x.toFixed(3))
       root.style.setProperty('--pointer-y', now.y.toFixed(3))
+      const speed = window.scrollY - lastScroll
+      lastScroll = window.scrollY
+      const leanGoal = Math.max(-MAX_LEAN_DEGREES, Math.min(MAX_LEAN_DEGREES, speed * 0.06))
+      lean += (leanGoal - lean) * 0.12
+      root.style.setProperty('--shard-lean', lean.toFixed(3))
       document.querySelectorAll<HTMLElement>('.shards').forEach((el) => {
         const scrolled = Math.max(MAX_SCROLL_BEFORE, -el.getBoundingClientRect().top)
         el.style.setProperty('--shard-scroll', scrolled.toFixed(0))
       })
-      const settled = Math.abs(goal.x - now.x) + Math.abs(goal.y - now.y) < 0.002
+      const settled = Math.abs(goal.x - now.x) + Math.abs(goal.y - now.y) + Math.abs(lean) < 0.002
       raf = settled ? 0 : requestAnimationFrame(step)
     }
 

@@ -65,6 +65,25 @@
   }
 }
 
+/* ---------- Press ---------- */
+
+/* Things sink under a finger or a click. Touch screens have no hover, so this is the
+   main feedback they get. On `translate`, so it stacks with any transform. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(a, button):active {
+    translate: 2px 3px;
+  }
+}
+
+/* ---------- Idle ---------- */
+
+/* A star ticking around, in the hero's status card and the logo. */
+@keyframes star-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ---------- Tilt (see useDepth) ---------- */
 
 /* Mouse only: a tilt driven by a finger would just look broken. */

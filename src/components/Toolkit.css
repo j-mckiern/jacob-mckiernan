@@ -55,6 +55,8 @@
   font-size: 28px;
   line-height: 1.1;
   text-transform: uppercase;
+  color: var(--tone-fg);
+  background-color: var(--tone);
   border-right: 5px solid var(--black);
   /* Halftone dots over the color, like the project cards. */
   background-image: radial-gradient(
@@ -64,19 +66,20 @@
   background-size: 9px 9px;
 }
 
+/* Set on the row, so the label and the chips' hover share a color. */
 .toolkit-tone-1 {
-  color: var(--hl-1-fg);
-  background-color: var(--hl-1);
+  --tone: var(--hl-1);
+  --tone-fg: var(--hl-1-fg);
 }
 
 .toolkit-tone-2 {
-  color: var(--hl-2-fg);
-  background-color: var(--hl-2);
+  --tone: var(--hl-2);
+  --tone-fg: var(--hl-2-fg);
 }
 
 .toolkit-tone-3 {
-  color: var(--hl-3-fg);
-  background-color: var(--hl-3);
+  --tone: var(--hl-3);
+  --tone-fg: var(--hl-3-fg);
 }
 
 .toolkit-tools {
@@ -102,6 +105,51 @@
   color: var(--black);
   background: var(--white);
   border: 3px solid var(--black);
+}
+
+/* Lifts and takes its row's color. On `translate`, because the glitch below uses
+   `transform`. */
+@media (hover: hover) {
+  .toolkit-chip:hover {
+    color: var(--tone-fg);
+    background: var(--tone);
+    box-shadow: 3px 3px 0 var(--black);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .toolkit-chip {
+    transition: translate 160ms cubic-bezier(0.2, 1.6, 0.4, 1);
+  }
+
+  .toolkit-chip:hover {
+    translate: 0 -4px;
+  }
+}
+
+/* A few random chips at a time (useRandomGlitch adds the class). */
+@media (prefers-reduced-motion: no-preference) {
+  .chip-glitch {
+    animation: chip-glitch 300ms steps(1);
+  }
+
+  @keyframes chip-glitch {
+    0% {
+      transform: translateX(4px) skewX(-8deg);
+      text-shadow: calc(2px * var(--glitch-reach)) 0 var(--glitch-text-1), calc(-2px * var(--glitch-reach)) 0 var(--glitch-text-2);
+      box-shadow: 3px 3px 0 var(--glitch-1), -3px -2px 0 var(--glitch-2);
+    }
+    35% {
+      transform: translateX(-3px) skewX(6deg);
+      text-shadow: calc(-2px * var(--glitch-reach)) 0 var(--glitch-text-1), calc(2px * var(--glitch-reach)) 0 var(--glitch-text-2);
+      box-shadow: -3px 3px 0 var(--glitch-2), 3px -2px 0 var(--glitch-1);
+    }
+    70% {
+      transform: translateX(1px);
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
 }
 
 /* ---------- Tablet + mobile ---------- */

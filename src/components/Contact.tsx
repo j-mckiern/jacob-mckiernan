@@ -19,15 +19,23 @@ function Contact() {
       <div className="contact-stage">
         <Shards section="contact" />
 
-        <div className="contact-poster reveal" data-tilt>
+        {/* No data-tilt: tilting redraws the spinning rays in 3D on every pointer move,
+            which cost about 20fps. The tiles drifting at their own depths replace it. */}
+        <div className="contact-poster reveal">
           {/* The torn sheet is its own layer, so the filter that outlines it never has
               to redraw the buttons on top. */}
           <div className="contact-sheet" aria-hidden="true">
             <div className="contact-sheet-fill" />
           </div>
 
+          {/* Manga focus lines. Outside the sheet, so spinning them never reruns its filter. */}
+          <div className="contact-rays" aria-hidden="true">
+            <div className="contact-rays-spin" />
+          </div>
+
           <div className="contact-body">
-            <p className="contact-shout">
+            {/* data-glitch: useReveal adds .is-glitching while it's on screen, which runs the idle motion. */}
+            <p className="contact-shout" data-glitch>
               {/* Read once as a phrase, not tile by tile. */}
               <span className="sr-only">{`${say} ${hi}${bang}`}</span>
               <span className="contact-tile contact-tile-say" aria-hidden="true">
@@ -46,7 +54,7 @@ function Contact() {
                 <a className="contact-email pop" href={`mailto:${site.email}`}>
                   <span className="contact-email-address">{site.email}</span>
                   <span className="contact-email-arrow" aria-hidden="true">
-                    →
+                    <span>→</span>
                   </span>
                 </a>
               </li>

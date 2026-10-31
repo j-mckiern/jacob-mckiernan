@@ -44,7 +44,14 @@
 }
 
 .logo-star {
+  display: inline-block;
   color: var(--text-a);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo-star {
+    animation: star-spin 4s steps(8) infinite;
+  }
 }
 
 /* ---------- Desktop nav ---------- */
@@ -86,6 +93,22 @@
   background: var(--hl-1);
   border-color: var(--black);
   box-shadow: 3px 3px 0 var(--black);
+}
+
+/* An animation plays when its rule starts to match, so this bumps the link each time
+   the section on screen changes, with no JavaScript. */
+@media (prefers-reduced-motion: no-preference) {
+  .nav-link[aria-current] {
+    animation: nav-bump 380ms cubic-bezier(0.2, 1.6, 0.4, 1);
+  }
+
+  @keyframes nav-bump {
+    from {
+      translate: 0 -5px;
+      rotate: -4deg;
+      scale: 1.12;
+    }
+  }
 }
 
 .header-controls {

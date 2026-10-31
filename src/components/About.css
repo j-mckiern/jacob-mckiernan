@@ -213,6 +213,72 @@
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  /* Stripes travel down the lit line. 28.3px is one full stripe at 45deg, so the loop
+     has no visible jump. */
+  .journey-rail-lit {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      color-mix(in srgb, var(--black) 45%, transparent) 0 4px,
+      transparent 4px 10px
+    );
+    background-size: 100% 28.3px;
+    animation: rail-march 1s linear infinite;
+  }
+
+  @keyframes rail-march {
+    to {
+      background-position-y: 28.3px;
+    }
+  }
+
+  /* The current job, once the line has reached it: a ring pulses off its node and its
+     title twitches. */
+  .journey-stop-now .journey-node {
+    position: relative;
+  }
+
+  .journey-stop-now.is-lit .journey-node::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 3px solid var(--text-a);
+    animation: node-ping 2.2s ease-out infinite;
+  }
+
+  @keyframes node-ping {
+    0% {
+      opacity: 1;
+      scale: 1;
+    }
+    60%,
+    100% {
+      opacity: 0;
+      scale: 2.4;
+    }
+  }
+
+  .journey-stop-now.is-lit .journey-role {
+    animation: role-twitch 5.7s steps(1) infinite;
+  }
+
+  @keyframes role-twitch {
+    0%,
+    95% {
+      translate: 0 0;
+      text-shadow: none;
+    }
+    91% {
+      translate: 3px 0;
+      text-shadow: calc(4px * var(--glitch-reach)) 0 var(--glitch-text-1), calc(-4px * var(--glitch-reach)) 0 var(--glitch-text-2);
+    }
+    93% {
+      translate: -2px 0;
+      text-shadow: calc(-3px * var(--glitch-reach)) 0 var(--glitch-text-1), calc(3px * var(--glitch-reach)) 0 var(--glitch-text-2);
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .journey-rail-lit,
   .journey-when,

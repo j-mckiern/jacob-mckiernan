@@ -434,12 +434,6 @@
     display: inline-block;
     animation: star-spin 4s steps(8) infinite;
   }
-
-  @keyframes star-spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
 }
 
 /* ---------- Hover ---------- */
