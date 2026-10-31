@@ -280,6 +280,17 @@
   }
 }
 
+/* The twitch above would otherwise replace the hover glitch on the current job. An
+   element has one `animation` value, so it lists both: split goes last so its
+   text-shadow wins, and the twitch keeps its place because it's still in the list. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .journey-stop-now.is-lit:hover .journey-role {
+    animation:
+      role-twitch 5.7s steps(1) infinite,
+      split 300ms steps(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .journey-rail-lit,
   .journey-when,
