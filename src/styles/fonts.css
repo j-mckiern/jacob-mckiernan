@@ -1,0 +1,68 @@
+/*
+  Self-hosted fonts, so the first paint doesn't wait on a second server. swap shows the
+  fallback font right away, then the real one once it arrives. index.html preloads the
+  three that draw the first screen; keep those paths in sync with this file.
+
+  The three *-name files are trimmed: Rock Salt, Permanent Marker and Sedgwick Ave Display
+  only appear in the name tiles and the logo, so they only hold the letters of "Jacob
+  McKiernan" in both cases: a b c e i j k m n o r. Any other letter in those fonts falls
+  back to a plain cursive one. To add a letter, ask Google Fonts for the new set with a
+  browser user agent, then download the woff2 URL in each @font-face it returns:
+
+    https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rock+Salt&family=Sedgwick+Ave+Display&display=swap&text=abceijkmnorABCEIJKMNOR
+*/
+@font-face {
+  font-family: 'Archivo Narrow';
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/archivo-narrow-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Bowlby One';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/bowlby-one.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Rubik Mono One';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/rubik-mono-one.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Special Elite';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/special-elite.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/space-mono-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Rock Salt';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/rock-salt-name.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Permanent Marker';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/permanent-marker-name.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Sedgwick Ave Display';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/sedgwick-ave-display-name.woff2') format('woff2');
+}
