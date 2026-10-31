@@ -29,20 +29,40 @@
   display: flex;
 }
 
-/* The filter goes on this parent because clip-path would cut off a box-shadow.
-   Four copies make the outline, the last is the hard shadow. */
+/* The outline and hard shadow are the torn shape again, a little bigger, behind the
+   fill. clip-path would cut off a box-shadow, and a drop-shadow filter this large
+   flickers in iOS Safari while the rays turn. */
 .contact-sheet {
+  --sheet-line: 4px;
+  --sheet-drop: 8px;
+
   position: absolute;
   inset: 0;
-  filter: drop-shadow(4px 0 0 var(--black)) drop-shadow(-4px 0 0 var(--black))
-    drop-shadow(0 4px 0 var(--black)) drop-shadow(0 -4px 0 var(--black))
-    drop-shadow(8px 8px 0 var(--hl-1-shadow));
+  isolation: isolate;
+}
+
+.contact-sheet::before,
+.contact-sheet::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--sheet-line) * -1);
+  clip-path: var(--torn);
+}
+
+.contact-sheet::before {
+  background: var(--hl-1-shadow);
+  translate: var(--sheet-drop) var(--sheet-drop);
+}
+
+.contact-sheet::after {
+  background: var(--black);
 }
 
 /* Torn along the top and bottom. Halftone dots over the color, like the toolkit labels. */
 .contact-sheet-fill {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background-color: var(--hl-1);
   background-image: radial-gradient(
     color-mix(in srgb, var(--black) 14%, transparent) 1.3px,
@@ -331,9 +351,8 @@
   }
 
   .contact-sheet {
-    filter: drop-shadow(3px 0 0 var(--black)) drop-shadow(-3px 0 0 var(--black))
-      drop-shadow(0 3px 0 var(--black)) drop-shadow(0 -3px 0 var(--black))
-      drop-shadow(5px 5px 0 var(--hl-1-shadow));
+    --sheet-line: 3px;
+    --sheet-drop: 5px;
   }
 
   .contact-body {

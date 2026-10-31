@@ -22,13 +22,12 @@ function Contact() {
         {/* No data-tilt: tilting redraws the spinning rays in 3D on every pointer move,
             which cost about 20fps. The tiles drifting at their own depths replace it. */}
         <div className="contact-poster reveal">
-          {/* The torn sheet is its own layer, so the filter that outlines it never has
-              to redraw the buttons on top. */}
+          {/* The torn sheet, with its outline and shadow, behind everything else. */}
           <div className="contact-sheet" aria-hidden="true">
             <div className="contact-sheet-fill" />
           </div>
 
-          {/* Manga focus lines. Outside the sheet, so spinning them never reruns its filter. */}
+          {/* Manga focus lines. Their own layer, so spinning them never repaints the sheet. */}
           <div className="contact-rays" aria-hidden="true">
             <div className="contact-rays-spin" />
           </div>
